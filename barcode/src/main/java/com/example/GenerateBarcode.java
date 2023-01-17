@@ -1,6 +1,5 @@
 package com.example;
 
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
@@ -221,9 +220,6 @@ public class GenerateBarcode
                     FileWriter writingFile = new FileWriter(fileToAppend + "/customPath.txt");
                     writingFile.write(customLocation);
                     writingFile.close();
-                    JOptionPane.showMessageDialog(null,
-                        "Path Changed", "Action Successful...",
-                        JOptionPane.WARNING_MESSAGE);
                 }catch(IOException e){
     
                 }
@@ -256,7 +252,6 @@ public class GenerateBarcode
 
     public static File generateDirectory(){
         File customFileStorage = new File("");
-        File defaultFileStorage;
         if (OS.equals("win")){
             JOptionPane.showMessageDialog(null,
             "Windows not supported yet", "Aborting...",
