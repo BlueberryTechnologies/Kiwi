@@ -27,16 +27,16 @@ public class ChooseDirectory {
     JPanel panel = new JPanel();
     JFileChooser chooser = new JFileChooser();
     GenerateBarcode generateBarcode = new GenerateBarcode();
+    JLabel currLocation = new JLabel(" Current Location: " + generateBarcode.getImageSavePath());
 
 
     public ChooseDirectory(){
-        
-
         JButton dirButton = new JButton("Select Directory");
         dirButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
                 generateBarcode.selectDirectory(generateBarcode.generateDirectory(), false);
-                System.exit(0);
+                frame.dispose();
+                new ChooseDirectory();
             }
         });
 
@@ -44,11 +44,21 @@ public class ChooseDirectory {
         defDirButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
                 generateBarcode.selectDirectory(generateBarcode.generateDirectory(), true);
-                System.exit(0);
+                JOptionPane.showMessageDialog(null,
+                        "Path Changed", "Action Successful...",
+                        JOptionPane.WARNING_MESSAGE);
+                        SwingUtilities.updateComponentTreeUI(frame);
+                        frame.dispose();
+                        new ChooseDirectory();
             }
         });
-        
-
+        frame.addWindowListener( new WindowAdapter(){
+            public void windowClosing(WindowEvent e)
+            {
+                new EarlGUI();
+            }
+        });
+        panel.add(currLocation);
         panel.add(dirButton);
         panel.add(defDirButton);
         panel.setLayout(new GridLayout(0,1));
@@ -58,7 +68,7 @@ public class ChooseDirectory {
          */
         frame.setPreferredSize(new Dimension(400,200));
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setTitle("Choose Default Directory");
         frame.pack();
         frame.setVisible(true);

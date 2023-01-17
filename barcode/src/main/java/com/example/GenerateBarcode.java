@@ -38,7 +38,7 @@ public class GenerateBarcode
     File file;
     String targetFile;
     String customLocation;
-    String photoLocation;
+    static String photoLocation;
     private static String OS = System.getProperty("os.name").toLowerCase();
     private static final File user_home = new File(System.getProperty("user.home"));
     File customFileLocation;
@@ -221,6 +221,9 @@ public class GenerateBarcode
                     FileWriter writingFile = new FileWriter(fileToAppend + "/customPath.txt");
                     writingFile.write(customLocation);
                     writingFile.close();
+                    JOptionPane.showMessageDialog(null,
+                        "Path Changed", "Action Successful...",
+                        JOptionPane.WARNING_MESSAGE);
                 }catch(IOException e){
     
                 }
@@ -237,7 +240,7 @@ public class GenerateBarcode
         }
         
     }
-    public void readingDirectory(File photoFileLocation){
+    public static void readingDirectory(File photoFileLocation){
         try{
             FileReader readingFile = new FileReader(photoFileLocation + "/customPath.txt");
             Scanner readingFileScanner = new Scanner(readingFile);
@@ -288,7 +291,7 @@ public class GenerateBarcode
     public String getReturnPath(){
         return finalPath;
     }
-    public String getImageSavePath(){
+    public static String getImageSavePath(){
         readingDirectory(generateDirectory());
         return photoLocation;
     }
