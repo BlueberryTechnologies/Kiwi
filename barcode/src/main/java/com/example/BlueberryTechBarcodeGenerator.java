@@ -34,6 +34,9 @@ import javax.swing.filechooser.FileSystemView;
  import com.google.zxing.common.BitMatrix;
 
 public class BlueberryTechBarcodeGenerator{
+    
+
+
     String printerName = "";
     String printerIP = "";
     String userChoice = "";
@@ -51,6 +54,7 @@ public class BlueberryTechBarcodeGenerator{
     private static String OS = System.getProperty("os.name").toLowerCase();
     private static final File user_home = new File(System.getProperty("user.home"));
     File customFileLocation;
+    File defaultDirectoryToWrite = new File("");
 
     public void GenerateBarcodes(String text, String algo){
         /*
@@ -60,7 +64,7 @@ public class BlueberryTechBarcodeGenerator{
          *              -> String
          */
         try{
-            File barcodeImages = new File(getDirectory(getDefaultDirectory()), "/barcode_images"); // Establishes a directory to save the barcode photos to.
+            File barcodeImages = new File(getDirectory(), "/barcode_images"); // Establishes a directory to save the barcode photos to.
             if (!barcodeImages.exists()){ // If the folder doesn't exist in the specified directory, then it creates one.
                 barcodeImages.mkdirs();
             }
@@ -195,7 +199,7 @@ public class BlueberryTechBarcodeGenerator{
         return finalPath;
     }
     public String getImageSavePath(){
-        return getDirectory(getDefaultDirectory());
+        return getDirectory();
     }
 
 
@@ -203,9 +207,17 @@ public class BlueberryTechBarcodeGenerator{
     /*
      * Setting and getting directories
      */
-    public String getDirectory(File defaultDirectory){
+    public String getDirectory(){
         try{
-            FileReader readingFile = new FileReader(defaultDirectory + "/customPath.txt");
+            if (getDefaultDirectory() == null){
+
+            }
+            File fileToReadFrom = new File(getDefaultDirectory() + "/customPath.txt");
+            if (!fileToReadFrom.exists()){
+                setDirectory(true);
+                JOptionPane.showMessageDialog(null, "A Custom File Text has been generated and placed in: " + getDefaultDirectory(), "Warning...", JOptionPane.WARNING_MESSAGE);
+            }
+            FileReader readingFile = new FileReader(fileToReadFrom);
             Scanner readingFileScanner = new Scanner(readingFile);
             String data = readingFileScanner.nextLine();
             readingFileScanner.close();
@@ -216,20 +228,25 @@ public class BlueberryTechBarcodeGenerator{
         return null;
     }
     public File getDefaultDirectory(){
+        setDefaultDirectory();
+        return defaultDirectoryToWrite;
+    }
+    private void setDefaultDirectory(){
         File defaultDirectory = new File("");
-            if (OS.equals("win")){
-                JOptionPane.showMessageDialog(null,"Windows not supported yet", "Aborting...",JOptionPane.WARNING_MESSAGE);
-            }else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")){
-                defaultDirectory = new File(user_home, "BBTBE");
-                if(!defaultDirectory.exists()){
-                    defaultDirectory.mkdirs();
-                }
-            }else if (OS.contains("mac")){
-                JOptionPane.showMessageDialog(null,"MacOS not supported yet", "Aborting...",JOptionPane.WARNING_MESSAGE); 
-            }else {
-                JOptionPane.showMessageDialog(null,"Operating System Not Found", "Aborting...",JOptionPane.WARNING_MESSAGE); 
+        if (OS.equals("win")){
+            JOptionPane.showMessageDialog(null,"Windows not supported yet", "Aborting...",JOptionPane.WARNING_MESSAGE);
+        }else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")){
+            defaultDirectory = new File(user_home, "BBTBE");
+            if(!defaultDirectory.exists()){
+                JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.WARNING_MESSAGE);
+                defaultDirectory.mkdirs();
             }
-            return defaultDirectory;
+        }else if (OS.contains("mac")){
+            JOptionPane.showMessageDialog(null,"MacOS not supported yet", "Aborting...",JOptionPane.WARNING_MESSAGE); 
+        }else {
+            JOptionPane.showMessageDialog(null,"Operating System Not Found", "Aborting...",JOptionPane.WARNING_MESSAGE); 
+        }
+        defaultDirectoryToWrite = defaultDirectory;
     }
     public File setDirectory(boolean isDefault){
             if (!isDefault){

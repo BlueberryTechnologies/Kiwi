@@ -38,6 +38,11 @@ import javax.swing.JFileChooser;
  */
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 
 /*
@@ -49,7 +54,7 @@ import java.io.File;
 
 public class BlueberryTechBarcodeEditor implements ActionListener{
     
-    BlueberryTechBarcodeGenerator barcodeGenerator = new BlueberryTechBarcodeGenerator();
+    static BlueberryTechBarcodeGenerator barcodeGenerator = new BlueberryTechBarcodeGenerator();
 
     /*
      * Variables
@@ -95,7 +100,6 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     JMenuBar menuBar;
     JMenuItem menuButton1, menuButton2, menuButton3;
     File customFileLocation;
-
     public BlueberryTechBarcodeEditor(){
         
         final String[] dropdownChoices = { "QR Codes", "CODE128", "AZTEC", "PLAIN TEXT", "IMAGE" };
@@ -103,6 +107,9 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         JButton generateButton = new JButton("Generate Code");
         JButton printButton = new JButton("Print");
         JButton imageButton = new JButton("Select Image");
+
+
+
         imageButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
                 if (dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE")){
@@ -175,8 +182,14 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
                 directoryFrame.setVisible(true);
             }
         });
-        menuButton2 = new JMenuItem("About");
+        menuButton2 = new JMenuItem("Printer Resources");
         menuButton2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+                openWebpage("https://blueberry.dev");
+            }
+        });
+        menuButton3 = new JMenuItem("About");
+        menuButton3.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 JOptionPane.showMessageDialog(null,
                             "Blueberry Technologies Barcode Editor.\n© Blueberry Technologies - 2022", "About...",
@@ -185,6 +198,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         });
         jMenu.add(menuButton1);
         jMenu.add(menuButton2);
+        jMenu.add(menuButton3);
 
         menuBar.add(jMenu);
         mainFrame.setJMenuBar(menuBar);
@@ -263,35 +277,30 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         mainFrame.pack();
         mainFrame.setVisible(true);
     }
-    public void ChooseDirectory(){
-        
-        
-        
-    }
+
     public static void main (String args[]){
-        new BlueberryTechBarcodeEditor();
-        /*
-         * generateDirectory();
-        if(getImageSavePath() == null){
-            ChooseDirectory();
+        if(barcodeGenerator.getImageSavePath() == null){
+            System.out.println("This is null");
         }else{
             new BlueberryTechBarcodeEditor();
         }
-         */
     }
     
     public void actionPerformed(ActionEvent arg0){
 
     }
 
-/*
- * ===================================================================================================================
- * ===================================================================================================================
- * =============================================GENERATING THE BARCODES===============================================
- * ===================================================================================================================
- * ===================================================================================================================
- * ===================================================================================================================
- */
-
+    //https://stackoverflow.com/questions/5226212/how-to-open-the-default-webbrowser-using-java
     
+    public void openWebpage(String url) {
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            try {
+                Desktop.getDesktop().browse(new URI(url));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
