@@ -10,7 +10,7 @@
 
 ## Changelog
 
-#### 1.0.6
+#### 1.0.6 (Coming Soon)
 
 - Finish Printer Selecting
 
