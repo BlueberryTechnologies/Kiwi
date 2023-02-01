@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 import javax.print.Doc;
+import java.awt.print.PrinterJob;
+import java.util.List;
+import java.util.ArrayList;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
 import javax.print.PrintService;
@@ -280,4 +283,39 @@ public class BlueberryTechBarcodeGenerator{
             }
             return null;
     }
+
+    /*
+     * Specifying the printer to print to
+     * https://stackoverflow.com/questions/14885993/how-do-i-specify-the-printer-i-want-to-use-in-java
+     * It's the second result
+     */
+
+     public static PrintService findPrintService(String printerName){
+        printerName = printerName.toLowerCase();
+
+        PrintService service = null;
+        PrintService[] services = PrinterJob.lookupPrintServices();
+
+        for (int index = 0; service == null && index < services.length; index++) {
+
+            if (services[index].getName().toLowerCase().indexOf(printerName) >= 0) {
+                service = services[index];
+            }
+        }
+
+        return service;
+     }
+     public static List<String> getPrinterServiceNameList() {
+
+        // get list of all print services
+        PrintService[] services = PrinterJob.lookupPrintServices();
+        List<String> list = new ArrayList<String>();
+
+        for (int i = 0; i < services.length; i++) {
+            list.add(services[i].getName());
+        }
+        
+        return list;
+    }
+
 }

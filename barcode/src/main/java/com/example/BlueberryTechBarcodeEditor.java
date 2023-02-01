@@ -86,6 +86,12 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
      */
     JFrame directoryFrame = new JFrame();
     JPanel directoryPanel = new JPanel();
+    /*
+     * Printer Frame and Panel
+     */
+    JFrame printerListFrame = new JFrame();
+    JPanel printerListPanel = new JPanel();
+    JTextArea printerList = new JTextArea();
 
     /* */
     JFileChooser chooser = new JFileChooser();
@@ -98,7 +104,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     JScrollPane scrollPane;
     JMenu jMenu;
     JMenuBar menuBar;
-    JMenuItem menuButton1, menuButton2, menuButton3;
+    JMenuItem menuButton1, menuButton2, menuButton3, menuButton4;
     File customFileLocation;
     public BlueberryTechBarcodeEditor(){
         
@@ -122,22 +128,33 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
                 }
             }
         });
-        JButton dirButton = new JButton("Select Directory");
+        final JButton dirButton = new JButton("Select Directory");
+        final JButton defDirButton = new JButton("Use Default Directory");
         dirButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0) {
+            @Override public void actionPerformed(ActionEvent arg0) {
                 barcodeGenerator.setDirectory(false);
+                currLocation = new JLabel(" Current Location: " + barcodeGenerator.getImageSavePath());
+                directoryPanel.removeAll();
+                directoryPanel.add(currLocation);
+                directoryPanel.add(dirButton);
+                directoryPanel.add(defDirButton);
+                directoryPanel.revalidate();
+                directoryPanel.repaint();
                 JOptionPane.showMessageDialog(null,"Path Changed", "Action Successful...",JOptionPane.WARNING_MESSAGE);
-                directoryFrame.invalidate();
-                directoryFrame.revalidate();
-                directoryFrame.repaint();
-                directoryFrame.validate();
             }
         });
 
-        JButton defDirButton = new JButton("Use Default Directory");
+        
         defDirButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
                 barcodeGenerator.setDirectory(true);
+                currLocation = new JLabel(" Current Location: " + barcodeGenerator.getImageSavePath());
+                directoryPanel.removeAll();
+                directoryPanel.add(currLocation);
+                directoryPanel.add(dirButton);
+                directoryPanel.add(defDirButton);
+                directoryPanel.revalidate();
+                directoryPanel.repaint();
                 JOptionPane.showMessageDialog(null,"Path Changed", "Action Successful...",JOptionPane.WARNING_MESSAGE);
             }
         });
@@ -161,7 +178,26 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         directoryFrame.setTitle("Choose Default Directory");
         
         
-            
+        printerListFrame.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e)
+            {
+                new BlueberryTechBarcodeEditor();
+            }
+        });
+        
+        /* Printer List */
+        String printerListString = barcodeGenerator.getPrinterServiceNameList().toString();
+        printerList.append(printerListString);
+        printerListPanel.add(printerList);
+        printerListPanel.setLayout(new GridLayout(0,1));
+        printerListFrame.add(printerListPanel, BorderLayout.CENTER);
+        /*
+            * Building the frame
+            */
+        printerListFrame.setPreferredSize(new Dimension(400,200));
+        printerListFrame.setLocationRelativeTo(null);
+        printerListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        printerListFrame.setTitle("Choose Default Directory");
     
             
         
@@ -185,20 +221,30 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         menuButton2 = new JMenuItem("Printer Resources");
         menuButton2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
-                openWebpage("https://blueberry.dev");
+                openWebpage("https://blueberry.dev/products/BBTBE/index.html");
+                
             }
         });
-        menuButton3 = new JMenuItem("About");
+        menuButton3 = new JMenuItem("Select Printer");
         menuButton3.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
+                mainFrame.dispose();
+                printerListFrame.pack();
+                printerListFrame.setVisible(true);
+            }
+        });
+        menuButton4 = new JMenuItem("About");
+        menuButton4.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
                 JOptionPane.showMessageDialog(null,
-                            "Blueberry Technologies Barcode Editor.\n© Blueberry Technologies - 2022", "About...",
+                            "Blueberry Technologies Barcode Editor.\n© Blueberry Technologies, 2022-2023", "About...",
                             JOptionPane.WARNING_MESSAGE);
             }
         });
         jMenu.add(menuButton1);
         jMenu.add(menuButton2);
         jMenu.add(menuButton3);
+        jMenu.add(menuButton4);
 
         menuBar.add(jMenu);
         mainFrame.setJMenuBar(menuBar);
