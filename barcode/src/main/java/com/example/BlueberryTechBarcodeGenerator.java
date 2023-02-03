@@ -20,6 +20,7 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.JobMediaSheetsSupported;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -58,6 +59,13 @@ public class BlueberryTechBarcodeGenerator{
     private static final File user_home = new File(System.getProperty("user.home"));
     File customFileLocation;
     File defaultDirectoryToWrite = new File("");
+    PrintService[] printService = FindPrintService(PrintRequestAttributeSet());
+
+    public void updatePrinter(String printer){
+        findPrintService(printer);
+        JOptionPane.showMessageDialog(null,"Updated printer to: " + printer, "Success...",JOptionPane.WARNING_MESSAGE);
+        
+    }
 
     public void GenerateBarcodes(String text, String algo){
         /*
@@ -111,11 +119,12 @@ public class BlueberryTechBarcodeGenerator{
     }
 
     public void PrintBarcode(String path, boolean plainText){
+        System.out.println(printService);
         try{
             if(plainText){
                 DocFlavor textFlavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
                 PrintRequestAttributeSet().add(new Copies(1));
-                PrintService[] printService = FindPrintService(PrintRequestAttributeSet());
+                //PrintService[] printService = FindPrintService(PrintRequestAttributeSet());
                 String printerName = "";
                 if (printService.length == 0){ // If the print service is zero then throws exception.
                 throw new RuntimeException("No printer services available.");
@@ -134,7 +143,7 @@ public class BlueberryTechBarcodeGenerator{
             }else if(!plainText){
                 DocFlavor imageFlavor = DocFlavor.INPUT_STREAM.GIF; // Format for images.
                 PrintRequestAttributeSet().add(new Copies(1));
-                PrintService[] printService = FindPrintService(PrintRequestAttributeSet());
+                //PrintService[] printService = FindPrintService(PrintRequestAttributeSet());
                 String printerName = "";
                 if (printService.length == 0){ // If the print service is zero then throws exception.
                 throw new RuntimeException("No printer services available.");
@@ -172,7 +181,7 @@ public class BlueberryTechBarcodeGenerator{
 
     public String ReturnPrinterName(){
         PrintRequestAttributeSet().add(new Copies(1));
-        PrintService[] printService = FindPrintService(PrintRequestAttributeSet());
+        //PrintService[] printService = FindPrintService(PrintRequestAttributeSet());
         if (printService.length == 0){ // If the print service is zero then throws exception.
             JOptionPane.showMessageDialog(null,"No printer services available", "Aborting...",JOptionPane.WARNING_MESSAGE);
             return "No Printer Found";
@@ -188,7 +197,11 @@ public class BlueberryTechBarcodeGenerator{
 			File selectedFile = jfc.getSelectedFile();
 			System.out.println(selectedFile.getAbsolutePath());
             setImageFile(selectedFile.getAbsolutePath());
-		}
+            selectedImage = true;
+		}else{
+            selectedImage = false;
+            JOptionPane.showMessageDialog(null,"You canceled image selection.", "Notify...",JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     public void setImageFile(String fileThatWasSelected){

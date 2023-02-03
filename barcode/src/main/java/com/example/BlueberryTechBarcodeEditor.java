@@ -43,6 +43,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 /*
@@ -102,25 +103,49 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     JTextField userInput = new JTextField();
     JTextArea output;
     JScrollPane scrollPane;
-    JMenu jMenu;
+    JMenu settingsMenu;
+    JMenu about;
     JMenuBar menuBar;
-    JMenuItem menuButton1, menuButton2, menuButton3, menuButton4;
+    JMenuItem changeDirectoryButton, printerResourcesButton, selectPrinterButton, aboutButton;
     File customFileLocation;
+    JButton generateButton = new JButton("Generate Code");
+    JButton printButton = new JButton("Print");
+    JButton imageButton = new JButton("Select Image");
     public BlueberryTechBarcodeEditor(){
         
         final String[] dropdownChoices = { "QR Codes", "CODE128", "AZTEC", "PLAIN TEXT", "IMAGE" };
         final JComboBox<String> comboBox = new JComboBox<String>(dropdownChoices);
-        JButton generateButton = new JButton("Generate Code");
-        JButton printButton = new JButton("Print");
-        JButton imageButton = new JButton("Select Image");
-
-
+        
+        final String[] printerChoices = barcodeGenerator.getPrinterServiceNameList().toArray(new String[0]);
+        final JComboBox<String> printerComboBox = new JComboBox<String>(printerChoices);
 
         imageButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
                 if (dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE")){
                     barcodeGenerator.selectImage();
-                    selectedImage = true;
+                }
+            }
+        });
+        comboBox.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+                if (dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE")){
+                    mainPanel.remove(userInput);
+                    mainPanel.remove(generateButton);
+                    mainPanel.remove(printButton);
+                    
+                    mainPanel.add(imageButton);
+                    mainPanel.add(printButton);
+                    mainPanel.revalidate();
+                    mainPanel.repaint();
+                }else if (!dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE")){
+                    mainPanel.remove(imageButton);
+                    mainPanel.remove(printButton);
+
+                    mainPanel.add(userInput);
+                    mainPanel.add(generateButton);
+                    mainPanel.add(printButton);
+                    mainPanel.revalidate();
+                    mainPanel.repaint();
                 }else {
                     JOptionPane.showMessageDialog(null,
                             "Please use the dropdown box and select image.", "Aborting...",
@@ -197,7 +222,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         printerListFrame.setPreferredSize(new Dimension(400,200));
         printerListFrame.setLocationRelativeTo(null);
         printerListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        printerListFrame.setTitle("Choose Default Directory");
+        printerListFrame.setTitle("Printers On Network");
     
             
         
@@ -209,44 +234,54 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         printingLocation = new JLabel("Printing Location: " + barcodeGenerator.getImageSavePath());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
         menuBar = new JMenuBar();
-        jMenu = new JMenu("Menu");
-        menuButton1 = new JMenuItem("Printer Settings");
-        menuButton1.addActionListener(new ActionListener(){
+        settingsMenu = new JMenu("Settings");
+        about = new JMenu("About");
+        aboutButton = new JMenuItem("About");
+        aboutButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+                JOptionPane.showMessageDialog(null,
+                            "Blueberry Technologies Barcode Editor.\nVersion 1.0.6\n© Blueberry Technologies, 2022-2023", "About...",
+                            JOptionPane.WARNING_MESSAGE);
+            }
+        });
+        changeDirectoryButton = new JMenuItem("Change Code Directory");
+        changeDirectoryButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 mainFrame.dispose();
                 directoryFrame.pack();
                 directoryFrame.setVisible(true);
             }
         });
-        menuButton2 = new JMenuItem("Printer Resources");
-        menuButton2.addActionListener(new ActionListener(){
+        printerResourcesButton = new JMenuItem("Printer Resources");
+        printerResourcesButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 openWebpage("https://blueberry.dev/products/BBTBE/index.html");
                 
             }
         });
-        menuButton3 = new JMenuItem("Select Printer");
-        menuButton3.addActionListener(new ActionListener(){
+        selectPrinterButton = new JMenuItem("Select Printer");
+        selectPrinterButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 mainFrame.dispose();
+                printerListFrame.add(printerComboBox);
                 printerListFrame.pack();
                 printerListFrame.setVisible(true);
             }
         });
-        menuButton4 = new JMenuItem("About");
-        menuButton4.addActionListener(new ActionListener(){
+        
+        printerComboBox.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
-                JOptionPane.showMessageDialog(null,
-                            "Blueberry Technologies Barcode Editor.\n© Blueberry Technologies, 2022-2023", "About...",
-                            JOptionPane.WARNING_MESSAGE);
+                barcodeGenerator.updatePrinter(printerChoices[printerComboBox.getSelectedIndex()]);
             }
         });
-        jMenu.add(menuButton1);
-        jMenu.add(menuButton2);
-        jMenu.add(menuButton3);
-        jMenu.add(menuButton4);
 
-        menuBar.add(jMenu);
+        settingsMenu.add(changeDirectoryButton);
+        about.add(printerResourcesButton);
+        settingsMenu.add(selectPrinterButton);
+        about.add(aboutButton);
+
+        menuBar.add(about);
+        menuBar.add(settingsMenu);
         mainFrame.setJMenuBar(menuBar);
         
         generateButton.addActionListener(new ActionListener(){
@@ -277,23 +312,31 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
             public void actionPerformed(ActionEvent arg0) {
                 if (isGenerated && !selectedImage){
                     barcodeGenerator.PrintBarcode(barcodeGenerator.getReturnPath(), false);;
-                }else if (selectedImage){
-                    barcodeGenerator.PrintBarcode(barcodeGenerator.getImageFile(), false);
-                    selectedImage = false;
-                }else{
-                    JOptionPane.showMessageDialog(null,"The code wasn't generated.", "Aborting...",JOptionPane.WARNING_MESSAGE);
+                }else if (!isGenerated && !dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE") && !selectedImage){
+                    JOptionPane.showMessageDialog(null,"The Code Was Not Generated.", "Aborting...",JOptionPane.WARNING_MESSAGE);
+                }
+                
+                
+                if (dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE")) {
+                    if (!barcodeGenerator.selectedImage){
+                        JOptionPane.showMessageDialog(null, "An Image Was Not Selected", "Aborting...",JOptionPane.WARNING_MESSAGE);
+                    }else{
+                        barcodeGenerator.PrintBarcode(barcodeGenerator.getImageFile(), false);
+                        selectedImage = false; // No image was selected
+                    }
                 }
             }
         });
         
-        mainFrame.setPreferredSize(new Dimension(300,400));
+        mainFrame.setPreferredSize(new Dimension(400,400));
         mainFrame.setLocationRelativeTo(null);
         
         mainPanel.add(printerNameLabel);
         mainPanel.add(printingLocation);
-        mainPanel.add(userInput);
+        
         mainPanel.add(comboBox);
-        mainPanel.add(imageButton);
+        mainPanel.add(userInput);
+        //mainPanel.add(imageButton);
         mainPanel.add(generateButton);
         mainPanel.add(printButton);
         mainPanel.setLayout(new GridLayout(0,1));
