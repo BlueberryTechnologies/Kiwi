@@ -2,8 +2,12 @@
 
 ## Features
 
+- Linux Support (Windows and Mac Coming Soon)
 - Code printing
+- Text Printing
+- Image Printing
 - Selectable code options
+- Selectable Printers
 - Custom path storage
 
 ---
