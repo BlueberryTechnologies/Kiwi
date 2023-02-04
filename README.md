@@ -12,6 +12,8 @@
 
 #### 1.0.7 (Coming Soon)
 
+- Add Official Windows and Mac Support
+- Remember last selected printer
 - Organize code
   - Organize groups of features in UI
     - Frame
@@ -28,6 +30,8 @@
 #### 1.0.6
 
 - Finish Printer Selecting
+  - User can now print to different printers on the network (See docs)
+  - Added printer dropdown and printer menu
 - UI Changes
   - Modified image selection and notifiers.
   - Changed default application size.

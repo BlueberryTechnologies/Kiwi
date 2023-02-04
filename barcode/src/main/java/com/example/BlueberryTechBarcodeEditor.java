@@ -111,6 +111,8 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     JButton generateButton = new JButton("Generate Code");
     JButton printButton = new JButton("Print");
     JButton imageButton = new JButton("Select Image");
+    JLabel currPrinter;
+
     public BlueberryTechBarcodeEditor(){
         
         final String[] dropdownChoices = { "QR Codes", "CODE128", "AZTEC", "PLAIN TEXT", "IMAGE" };
@@ -210,25 +212,11 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
             }
         });
         
-        /* Printer List */
-        String printerListString = barcodeGenerator.getPrinterServiceNameList().toString();
-        printerList.append(printerListString);
-        printerListPanel.add(printerList);
-        printerListPanel.setLayout(new GridLayout(0,1));
-        printerListFrame.add(printerListPanel, BorderLayout.CENTER);
-        /*
-            * Building the frame
-            */
-        printerListFrame.setPreferredSize(new Dimension(400,200));
-        printerListFrame.setLocationRelativeTo(null);
-        printerListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        printerListFrame.setTitle("Printers On Network");
-    
             
         
         userInputCode.setToolTipText("What kind of barcode would you like?");
         userInput.setToolTipText("Enter text you would like to print (Max 20 char)");
-        printerName = barcodeGenerator.ReturnPrinterName();
+        printerName = barcodeGenerator.returnPrinterName();
         //printerIP  = generateBarcode.ReturnPrinterIP();
         printerNameLabel = new JLabel("Printer Name: " + printerName);
         printingLocation = new JLabel("Printing Location: " + barcodeGenerator.getImageSavePath());
@@ -255,16 +243,34 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         printerResourcesButton = new JMenuItem("Printer Resources");
         printerResourcesButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
-                openWebpage("https://blueberry.dev/products/BBTBE/index.html");
+                String websiteString = "https://blueberry.dev";
+                URI website;
+                try {
+                    website = new URI(websiteString);
+                    openWebpage(website);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                
                 
             }
         });
+
         selectPrinterButton = new JMenuItem("Select Printer");
+        printerListFrame.setPreferredSize(new Dimension(400,200));
+        printerListFrame.setLocationRelativeTo(null);
+        printerListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        printerListFrame.setTitle("Printers On Network");
         selectPrinterButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 mainFrame.dispose();
-                printerListFrame.add(printerComboBox);
+                currPrinter = new JLabel("Current Printer: " + barcodeGenerator.returnPrinterName());
+                printerListPanel.add(currPrinter);
+                printerListPanel.add(printerComboBox);
+                printerListFrame.add(printerListPanel, BorderLayout.CENTER);
                 printerListFrame.pack();
+                printerListPanel.setLayout(new GridLayout(0,1));
+                printerListPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
                 printerListFrame.setVisible(true);
             }
         });
@@ -272,6 +278,13 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         printerComboBox.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 barcodeGenerator.updatePrinter(printerChoices[printerComboBox.getSelectedIndex()]);
+                System.out.println("Changed values");
+                printerListPanel.removeAll();
+                currPrinter = new JLabel("Current Printer: " + barcodeGenerator.returnPrinterName());
+                printerListPanel.add(currPrinter);
+                printerListPanel.add(printerComboBox);
+                printerListPanel.revalidate();
+                printerListPanel.repaint();
             }
         });
 
@@ -368,6 +381,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     }
 
     public static void main (String args[]){
+        barcodeGenerator.setInitialPrinter();
         if(barcodeGenerator.getImageSavePath() == null){
             System.out.println("This is null");
         }else{
@@ -381,15 +395,25 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
 
     //https://stackoverflow.com/questions/5226212/how-to-open-the-default-webbrowser-using-java
     
-    public void openWebpage(String url) {
-        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+    public static boolean openWebpage(URI uri) {
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
-                Desktop.getDesktop().browse(new URI(url));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (URISyntaxException e) {
+                desktop.browse(uri);
+                return true;
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        return false;
+    }
+    
+    public static boolean openWebpage(URL url) {
+        try {
+            return openWebpage(url.toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
