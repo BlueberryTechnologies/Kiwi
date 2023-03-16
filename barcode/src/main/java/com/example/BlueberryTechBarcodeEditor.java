@@ -6,8 +6,9 @@ package com.example;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.awt.event.*;
-
+import javax.imageio.ImageIO;
 
 /*
  * Java Swing Imports
@@ -94,6 +95,10 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     JPanel printerListPanel = new JPanel();
     JTextArea printerList = new JTextArea();
 
+    /* Generated Code Image Frame and Panel */
+    JFrame generatedCodeFrame = new JFrame();
+    JPanel generatedCodePanel = new JPanel();
+
     /* */
     JFileChooser chooser = new JFileChooser();
     JLabel currLocation = new JLabel(" Current Location: " + barcodeGenerator.getImageSavePath());
@@ -105,13 +110,15 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     JScrollPane scrollPane;
     JMenu settingsMenu;
     JMenu about;
+    JMenu codeOptions;
     JMenuBar menuBar;
-    JMenuItem changeDirectoryButton, printerResourcesButton, selectPrinterButton, aboutButton;
+    JMenuItem changeDirectoryButton, printerResourcesButton, selectPrinterButton, aboutButton, previewGeneratedCodeButton;
     File customFileLocation;
     JButton generateButton = new JButton("Generate Code");
     JButton printButton = new JButton("Print");
     JButton imageButton = new JButton("Select Image");
     JLabel currPrinter;
+    ImageIcon icon;
 
     public BlueberryTechBarcodeEditor(){
         
@@ -170,7 +177,6 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
                 JOptionPane.showMessageDialog(null,"Path Changed", "Action Successful...",JOptionPane.WARNING_MESSAGE);
             }
         });
-
         
         defDirButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
@@ -198,13 +204,25 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         directoryFrame.add(directoryPanel, BorderLayout.CENTER);
         /*
             * Building the frame
-            */
+        */
         directoryFrame.setPreferredSize(new Dimension(400,200));
         directoryFrame.setLocationRelativeTo(null);
         directoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         directoryFrame.setTitle("Choose Default Directory");
         
+        /*
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
+
         
+
+
+
         printerListFrame.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e)
             {
@@ -225,6 +243,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         settingsMenu = new JMenu("Settings");
         about = new JMenu("About");
         aboutButton = new JMenuItem("About");
+        codeOptions = new JMenu("Code Options");
         aboutButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 JOptionPane.showMessageDialog(null,
@@ -240,10 +259,41 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
                 directoryFrame.setVisible(true);
             }
         });
+        previewGeneratedCodeButton = new JMenuItem("Preview Generated Code");
+        previewGeneratedCodeButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+                // Code preview
+                mainFrame.dispose();
+                barcodeGenerator.selectCodeImage();
+                icon = new ImageIcon(barcodeGenerator.getImageFile());
+                if(barcodeGenerator.getCanceledImage()){
+                    System.out.println("p");
+                }else{
+                    JLabel generatedCodeLabel = new JLabel();
+                    generatedCodeLabel.setIcon(icon);
+                    generatedCodeFrame.add(generatedCodePanel);
+                    generatedCodeFrame.setSize(new Dimension(210,230));
+                    generatedCodeFrame.setLocationRelativeTo(null);
+                    generatedCodeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    generatedCodeFrame.setTitle("Generated Code");
+                    generatedCodeFrame.add(generatedCodeLabel);
+                    generatedCodeFrame.setResizable(false);
+                    generatedCodeFrame.revalidate();
+                    generatedCodeFrame.repaint();
+                    generatedCodeFrame.setVisible(true);
+                }
+            }
+        });
+        generatedCodeFrame.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e)
+            {
+                new BlueberryTechBarcodeEditor();
+            }
+        });
         printerResourcesButton = new JMenuItem("Printer Resources");
         printerResourcesButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
-                String websiteString = "https://blueberry.dev";
+                String websiteString = "https://blueberry.dev/products/barcode-editor/";
                 URI website;
                 try {
                     website = new URI(websiteString);
@@ -291,26 +341,35 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         settingsMenu.add(changeDirectoryButton);
         about.add(printerResourcesButton);
         settingsMenu.add(selectPrinterButton);
+        settingsMenu.add(codeOptions);
         about.add(aboutButton);
+        codeOptions.add(previewGeneratedCodeButton);
 
         menuBar.add(about);
         menuBar.add(settingsMenu);
+        //menuBar.add(codeOptions);
         mainFrame.setJMenuBar(menuBar);
         
         generateButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
                 if(!dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE") && !selectedImage){
-                    if(userInput.getText().length() > 255 && !dropdownChoices[comboBox.getSelectedIndex()].equals("PLAIN TEXT")){
+                    if(!barcodeGenerator.checkIfTextValid(userInput.getText())){
                         JOptionPane.showMessageDialog(null,
-                            "The amount of characters exceeds 255.", "Aborting...",
-                            JOptionPane.WARNING_MESSAGE);
-                    }else if (userInput.getText().length() > 50 && dropdownChoices[comboBox.getSelectedIndex()].equals("PLAIN TEXT")){
-                        JOptionPane.showMessageDialog(null,
-                        "The amount of characters exceeds 50.", "Aborting...",
-                        JOptionPane.WARNING_MESSAGE);
+                            "Please enter a valid file name.\n[A-Z, 0-9, _]", "Aborting...",
+                            JOptionPane.WARNING_MESSAGE);    
                     }else{
-                        barcodeGenerator.GenerateBarcodes(" " + userInput.getText(), dropdownChoices[comboBox.getSelectedIndex()]);
-                        isGenerated = true;
+                        if(userInput.getText().length() > 255 && !dropdownChoices[comboBox.getSelectedIndex()].equals("PLAIN TEXT")){
+                            JOptionPane.showMessageDialog(null,
+                                "The amount of characters exceeds 255.", "Aborting...",
+                                JOptionPane.WARNING_MESSAGE);
+                        }else if (userInput.getText().length() > 50 && dropdownChoices[comboBox.getSelectedIndex()].equals("PLAIN TEXT")){
+                            JOptionPane.showMessageDialog(null,
+                            "The amount of characters exceeds 50.", "Aborting...",
+                            JOptionPane.WARNING_MESSAGE);
+                        }else{
+                            barcodeGenerator.GenerateBarcodes(" " + userInput.getText(), dropdownChoices[comboBox.getSelectedIndex()]);
+                            isGenerated = true;
+                        }
                     }
                 }else{
                     JOptionPane.showMessageDialog(null,
