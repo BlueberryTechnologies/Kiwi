@@ -5,11 +5,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.print.Doc;
+
+import java.awt.image.BufferedImage;
 import java.awt.print.PrinterJob;
+import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
 import javax.print.DocFlavor;
@@ -26,6 +31,8 @@ import javax.print.attribute.standard.JobMediaSheetsSupported;
 import javax.print.attribute.standard.PrinterName;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
@@ -64,6 +71,8 @@ public class BlueberryTechBarcodeGenerator{
     File defaultDirectoryToWrite = new File("");
     PrintService[] printService;
     PrintService currPrinter;
+    private static Path generatedPath;
+    private boolean isCanceled;
 
     public void setInitialPrinter(){
         printService = FindPrintService(PrintRequestAttributeSet());
@@ -83,34 +92,37 @@ public class BlueberryTechBarcodeGenerator{
          *              -> String
          *              -> String
          */
+        String checkedText = text;
         try{
             File barcodeImages = new File(getDirectory(), "/barcode_images"); // Establishes a directory to save the barcode photos to.
             if (!barcodeImages.exists()){ // If the folder doesn't exist in the specified directory, then it creates one.
                 barcodeImages.mkdirs();
             }
             String path = barcodeImages + "/" + text + ".png"; // The path that is set for every barcode created.
-
+            
             /*
              * If algorithm is set as different, then it will generate a different barcode.
              */
+            System.out.println("Checked Text: " + checkedText);
             if (algo.equals("CODE128")){
                 Code128Writer code128Writer = new Code128Writer();
-                BitMatrix code128Matrix = code128Writer.encode(text, BarcodeFormat.CODE_128, 100, 100);
+                BitMatrix code128Matrix = code128Writer.encode(text, BarcodeFormat.CODE_128, 200, 200);
                 MatrixToImageWriter.writeToPath(code128Matrix, "jpg", Paths.get(path));
-                System.out.println("CODE128 Created");
-                JOptionPane.showMessageDialog(null,"CODE128 Code Created...", "Success...",JOptionPane.WARNING_MESSAGE);
+                setGeneratedPath(Paths.get(path));
+                System.out.println("The generated path is: " + getGeneratedPath());
             }else if (algo.equals("AZTEC")){
                 AztecWriter aztecWriter = new AztecWriter();
-                BitMatrix aztecMatrix = aztecWriter.encode(text, BarcodeFormat.AZTEC, 100, 100);
+                BitMatrix aztecMatrix = aztecWriter.encode(text, BarcodeFormat.AZTEC, 200, 200);
                 MatrixToImageWriter.writeToPath(aztecMatrix, "jpg", Paths.get(path));
-                System.out.println("AZTEC Created");
-                JOptionPane.showMessageDialog(null,"AZTEC Code Created...", "Success...",JOptionPane.WARNING_MESSAGE);
+                setGeneratedPath(Paths.get(path));
+                System.out.println("The generated path is: " + getGeneratedPath());
+                //JOptionPane.showMessageDialog(null,"AZTEC Code Created...", "Success...",JOptionPane.WARNING_MESSAGE);
             }else if (algo.equals("QR Codes")){
                 QRCodeWriter qrWriter = new QRCodeWriter(); 
-                BitMatrix qrMatrix = qrWriter.encode(text, BarcodeFormat.QR_CODE, 100, 100);
+                BitMatrix qrMatrix = qrWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
                 MatrixToImageWriter.writeToPath(qrMatrix, "jpg", Paths.get(path));
-                System.out.println("QR Created");
-                JOptionPane.showMessageDialog(null,"QR Code Created...", "Success...",JOptionPane.WARNING_MESSAGE);
+                setGeneratedPath(Paths.get(path));
+                System.out.println("The generated path is: " + getGeneratedPath());
             }else if (algo.equals("PLAIN TEXT")){
                 PrintBarcode(path, true);
             }else if (algo.equals("IMAGE")){
@@ -120,6 +132,7 @@ public class BlueberryTechBarcodeGenerator{
                 JOptionPane.showMessageDialog(null,"Barcode Failed", "Aborting...",JOptionPane.WARNING_MESSAGE);
             }
             finalPath = path;
+            JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
         }catch(Exception e){
             System.out.println("An exception has been thrown:\n> " + e.getMessage());
             JOptionPane.showMessageDialog(null,"There has been an error, please check the console.\n" + e.getMessage(), "Aborting...",JOptionPane.WARNING_MESSAGE);
@@ -183,6 +196,22 @@ public class BlueberryTechBarcodeGenerator{
         PrintService printService[] = PrintServiceLookup.lookupPrintServices(DocFlavor.INPUT_STREAM.GIF, printRequestAttributeSet);
         return printService;
     }
+    private static void setGeneratedPath(Path path){
+        String pathString = path.toString();
+        pathString = pathString.replace(" ", "");
+        generatedPath = Paths.get(pathString);
+    }
+    public Path getGeneratedPath(){
+        return generatedPath;
+    }
+
+    public boolean checkIfTextValid(String text){
+        if (text.matches("[a-zA-Z_0-9]+")){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
     public PrintRequestAttributeSet PrintRequestAttributeSet(){
         PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
@@ -198,19 +227,47 @@ public class BlueberryTechBarcodeGenerator{
         PrintService ps = printService[0];
         return ps.getName();
     }
-
-    public void selectImage(){
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-		int returnValue = jfc.showOpenDialog(null);
+    public void selectCodeImage(){
+        String updatedImagePath = getImageSavePath() + "/barcode_images";
+        File barcodeImages = new File(getImageSavePath(), "/barcode_images"); // Establishes a directory to save the barcode photos to.
+        if (!barcodeImages.exists()){ // If the folder doesn't exist in the specified directory, then it creates one.
+            barcodeImages.mkdirs();
+        }
+        JFileChooser jfc = new JFileChooser(updatedImagePath);
+        int returnValue = jfc.showOpenDialog(null);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = jfc.getSelectedFile();
 			System.out.println(selectedFile.getAbsolutePath());
             setImageFile(selectedFile.getAbsolutePath());
             selectedImage = true;
+            setCanceledImage(false);
 		}else{
             selectedImage = false;
+            setCanceledImage(true);
             JOptionPane.showMessageDialog(null,"You canceled image selection.", "Notify...",JOptionPane.WARNING_MESSAGE);
         }
+    }
+    public void selectImage(){
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        int returnValue = jfc.showOpenDialog(null);
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = jfc.getSelectedFile();
+			System.out.println(selectedFile.getAbsolutePath());
+            setImageFile(selectedFile.getAbsolutePath());
+            selectedImage = true;
+            setCanceledImage(false);
+		}else{
+            selectedImage = false;
+            setCanceledImage(true);
+            JOptionPane.showMessageDialog(null,"You canceled image selection.", "Notify...",JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    private void setCanceledImage(boolean isCanceledLocal){
+        isCanceled = isCanceledLocal;
+    }
+    public boolean getCanceledImage(){
+        return isCanceled;
     }
 
     public void setImageFile(String fileThatWasSelected){
@@ -263,14 +320,18 @@ public class BlueberryTechBarcodeGenerator{
         File defaultDirectory = new File("");
         if (OS.equals("win")){
             JOptionPane.showMessageDialog(null,"Windows not supported yet", "Aborting...",JOptionPane.WARNING_MESSAGE);
-        }else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")){
+        }else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")){ // Checks if the operating system is a Linux Variant.
             defaultDirectory = new File(user_home, "BBTBE");
             if(!defaultDirectory.exists()){
                 JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.WARNING_MESSAGE);
                 defaultDirectory.mkdirs();
             }
-        }else if (OS.contains("mac")){
-            JOptionPane.showMessageDialog(null,"MacOS not supported yet", "Aborting...",JOptionPane.WARNING_MESSAGE); 
+        }else if (OS.contains("mac")){ // Checks if the operating system is MacOS
+            defaultDirectory = new File(user_home, "BBTBE");
+            if(!defaultDirectory.exists()){
+                JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.WARNING_MESSAGE);
+                defaultDirectory.mkdirs();
+            }
         }else {
             JOptionPane.showMessageDialog(null,"Operating System Not Found", "Aborting...",JOptionPane.WARNING_MESSAGE); 
         }

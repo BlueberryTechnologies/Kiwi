@@ -2,22 +2,37 @@
 
 ## Features
 
-- Linux Support (Windows and Mac Coming Soon)
+- MacOS and Linux Support (Windows Coming Soon)
 - Code printing
 - Text Printing
 - Image Printing
 - Selectable code options
 - Selectable Printers
 - Custom path storage
+- Code Previews
 
 ---
 
+## Issues
+
+- Image Generation/Printing is still broken (sorry)
+- Text Generation/Printing is still broken (sorry)
+
 ## Changelog
 
-#### 1.0.7 (Coming Soon)
+#### 1.1 (Coming Soon)
 
-- Add Official Windows and Mac Support
-- Remember last selected printer
+- Give the user the option to select which media to print onto.
+- Give the user the option to select the resolution of the generated code.
+
+#### 1.0.9 (Coming Soon)
+
+- SQUASH BUGS
+
+#### 1.0.8 (Coming Soon)
+
+- Add Official Windows Support
+- Changed Printer Resources to point to correct webpage.
 - Organize code
   - Organize groups of features in UI
     - Frame
@@ -30,6 +45,13 @@
     - Setters
     - Getters
   - Comment Code (maybe)
+
+#### 1.0.7
+
+- Add Official Mac Support (yay!)
+- Remember last selected printer
+- Code Preview Menu
+  - Allows you to preview the code before you print.
 
 #### 1.0.6
 
