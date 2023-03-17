@@ -1,4 +1,4 @@
-package com.example;
+package com.blueberrytech.barcode;
 
 /*
  * Awt + Misc Imports
@@ -267,7 +267,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
                 barcodeGenerator.selectCodeImage();
                 icon = new ImageIcon(barcodeGenerator.getImageFile());
                 if(barcodeGenerator.getCanceledImage()){
-                    System.out.println("p");
+                    new BlueberryTechBarcodeEditor();
                 }else{
                     JLabel generatedCodeLabel = new JLabel();
                     generatedCodeLabel.setIcon(icon);

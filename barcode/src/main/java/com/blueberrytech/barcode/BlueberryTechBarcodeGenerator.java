@@ -1,4 +1,4 @@
-package com.example;
+package com.blueberrytech.barcode;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -115,8 +115,7 @@ public class BlueberryTechBarcodeGenerator{
                 BitMatrix aztecMatrix = aztecWriter.encode(text, BarcodeFormat.AZTEC, 200, 200);
                 MatrixToImageWriter.writeToPath(aztecMatrix, "jpg", Paths.get(path));
                 setGeneratedPath(Paths.get(path));
-                System.out.println("The generated path is: " + getGeneratedPath());
-                //JOptionPane.showMessageDialog(null,"AZTEC Code Created...", "Success...",JOptionPane.WARNING_MESSAGE);
+                System.out.println("The generated path is: " + getGeneratedPath());               //JOptionPane.showMessageDialog(null,"AZTEC Code Created...", "Success...",JOptionPane.WARNING_MESSAGE);
             }else if (algo.equals("QR Codes")){
                 QRCodeWriter qrWriter = new QRCodeWriter(); 
                 BitMatrix qrMatrix = qrWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);

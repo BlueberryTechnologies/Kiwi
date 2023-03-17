@@ -31,20 +31,27 @@
 
 #### 1.0.8 (Coming Soon)
 
-- Add Official Windows Support
-- Changed Printer Resources to point to correct webpage.
-- Organize code
-  - Organize groups of features in UI
-    - Frame
-    - Panel
-    - Buttons
-    - Menu
-  - Also organize generator class
-    - Code generation
-    - Image generation
-    - Setters
-    - Getters
-  - Comment Code (maybe)
+- ##### New Features
+
+  - Add Official Windows Support
+
+  - Organize code
+    - Organize groups of features in UI
+      - Frame
+      - Panel
+      - Buttons
+      - Menu
+    - Also organize generator class
+      - Code generation
+      - Image generation
+      - Setters
+      - Getters
+    - Comment Code (maybe)
+
+- ##### Bug Fixes
+
+  - Fixed an issue with UI not reopening [#15](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues/15)
+  - Changed Printer Resources to point to correct webpage. [#4](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues/4)
 
 #### 1.0.7
 
