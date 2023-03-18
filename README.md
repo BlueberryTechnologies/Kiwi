@@ -1,4 +1,8 @@
 # Blueberry Tech Barcode Editor
+![License](https://img.shields.io/github/license/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
+![Version](https://img.shields.io/github/v/release/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
+![Downloads](https://img.shields.io/github/downloads/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/total)
+![Commits](https://img.shields.io/github/commit-activity/m/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
 
 ## Features
 
