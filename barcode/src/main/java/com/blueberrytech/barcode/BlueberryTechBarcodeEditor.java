@@ -247,7 +247,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         aboutButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 JOptionPane.showMessageDialog(null,
-                            "Blueberry Technologies Barcode Editor.\nVersion 1.0.6\n© Blueberry Technologies, 2022-2023", "About...",
+                            "Blueberry Technologies Barcode Editor.\nVersion 1.0.8\n© Blueberry Technologies, 2022-2023", "About...",
                             JOptionPane.WARNING_MESSAGE);
             }
         });
