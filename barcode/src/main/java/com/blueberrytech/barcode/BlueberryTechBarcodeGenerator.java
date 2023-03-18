@@ -123,15 +123,19 @@ public class BlueberryTechBarcodeGenerator{
                 setGeneratedPath(Paths.get(path));
                 System.out.println("The generated path is: " + getGeneratedPath());
             }else if (algo.equals("PLAIN TEXT")){
-                PrintBarcode(path, true);
+                PrintBarcode(text, true);
             }else if (algo.equals("IMAGE")){
                 JOptionPane.showMessageDialog(null,"How did you get here? Interesting...", "Aborting...",JOptionPane.WARNING_MESSAGE);
             }
             else{
                 JOptionPane.showMessageDialog(null,"Barcode Failed", "Aborting...",JOptionPane.WARNING_MESSAGE);
             }
-            finalPath = path;
-            JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
+            if(algo.equals("PLAIN TEXT") || !algo.equals("IMAGE")){
+                // This is a holder because the algo check doesnt work right.
+            }else{
+                finalPath = path;
+                JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
+            }
         }catch(Exception e){
             System.out.println("An exception has been thrown:\n> " + e.getMessage());
             JOptionPane.showMessageDialog(null,"There has been an error, please check the console.\n" + e.getMessage(), "Aborting...",JOptionPane.WARNING_MESSAGE);
@@ -153,7 +157,7 @@ public class BlueberryTechBarcodeGenerator{
                 System.out.println("ops:" + ps);
                 System.out.println("=======================\n= Printing to " + printerName + "... =\n=======================");
                 DocPrintJob job = ps.createPrintJob(); // Creates a printing job to print to
-                String text = textToWrite;    // These are for printing with text
+                String text = path;    // These are for printing with text
                 byte[] bytes = text.getBytes("UTF-8");
                 Doc doc = new SimpleDoc(bytes, textFlavor, null);
                 job.print(doc, PrintRequestAttributeSet()); // Initiates the printing job with the selected parameters

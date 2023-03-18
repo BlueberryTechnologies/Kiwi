@@ -146,11 +146,22 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
                     mainPanel.add(printButton);
                     mainPanel.revalidate();
                     mainPanel.repaint();
+                }else if (dropdownChoices[comboBox.getSelectedIndex()].equals("PLAIN TEXT")){
+                    mainPanel.remove(imageButton);
+                    mainPanel.remove(printButton);
+
+                    mainPanel.add(userInput);
+                    generateButton.setText("Print Text");
+                    mainPanel.add(generateButton);
+                    
+                    mainPanel.revalidate();
+                    mainPanel.repaint();
                 }else if (!dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE")){
                     mainPanel.remove(imageButton);
                     mainPanel.remove(printButton);
 
                     mainPanel.add(userInput);
+                    generateButton.setText("Generate Code");
                     mainPanel.add(generateButton);
                     mainPanel.add(printButton);
                     mainPanel.revalidate();
