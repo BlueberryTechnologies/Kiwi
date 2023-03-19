@@ -406,5 +406,4 @@ public class BlueberryTechBarcodeGenerator{
         
         return list;
     }
-
 }

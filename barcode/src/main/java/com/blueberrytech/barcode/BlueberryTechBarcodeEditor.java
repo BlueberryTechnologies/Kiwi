@@ -80,7 +80,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     /*
      * Main Frame and Main Panel Variables
      */
-    JFrame mainFrame = new JFrame();
+    static JFrame mainFrame = new JFrame();
     JPanel mainPanel = new JPanel();
 
     /*
@@ -119,6 +119,10 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     JButton imageButton = new JButton("Select Image");
     JLabel currPrinter;
     ImageIcon icon;
+
+    MenuBar menuBarClass = new MenuBar();
+
+    
 
     public BlueberryTechBarcodeEditor(){
         
@@ -254,53 +258,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         settingsMenu = new JMenu("Settings");
         about = new JMenu("About");
         aboutButton = new JMenuItem("About");
-        codeOptions = new JMenu("Code Options");
-        aboutButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0){
-                JOptionPane.showMessageDialog(null,
-                            "Blueberry Technologies Barcode Editor.\nVersion 1.0.8\n© Blueberry Technologies, 2022-2023", "About...",
-                            JOptionPane.WARNING_MESSAGE);
-            }
-        });
-        changeDirectoryButton = new JMenuItem("Change Code Directory");
-        changeDirectoryButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0){
-                mainFrame.dispose();
-                directoryFrame.pack();
-                directoryFrame.setVisible(true);
-            }
-        });
-        previewGeneratedCodeButton = new JMenuItem("Preview Generated Code");
-        previewGeneratedCodeButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0){
-                // Code preview
-                mainFrame.dispose();
-                barcodeGenerator.selectCodeImage();
-                icon = new ImageIcon(barcodeGenerator.getImageFile());
-                if(barcodeGenerator.getCanceledImage()){
-                    new BlueberryTechBarcodeEditor();
-                }else{
-                    JLabel generatedCodeLabel = new JLabel();
-                    generatedCodeLabel.setIcon(icon);
-                    generatedCodeFrame.add(generatedCodePanel);
-                    generatedCodeFrame.setSize(new Dimension(210,230));
-                    generatedCodeFrame.setLocationRelativeTo(null);
-                    generatedCodeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    generatedCodeFrame.setTitle("Generated Code");
-                    generatedCodeFrame.add(generatedCodeLabel);
-                    generatedCodeFrame.setResizable(false);
-                    generatedCodeFrame.revalidate();
-                    generatedCodeFrame.repaint();
-                    generatedCodeFrame.setVisible(true);
-                }
-            }
-        });
-        generatedCodeFrame.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent e)
-            {
-                new BlueberryTechBarcodeEditor();
-            }
-        });
+        
         printerResourcesButton = new JMenuItem("Printer Resources");
         printerResourcesButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
@@ -349,17 +307,8 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
             }
         });
 
-        settingsMenu.add(changeDirectoryButton);
-        about.add(printerResourcesButton);
-        settingsMenu.add(selectPrinterButton);
-        settingsMenu.add(codeOptions);
-        about.add(aboutButton);
-        codeOptions.add(previewGeneratedCodeButton);
 
-        menuBar.add(about);
-        menuBar.add(settingsMenu);
-        //menuBar.add(codeOptions);
-        mainFrame.setJMenuBar(menuBar);
+        mainFrame.setJMenuBar(menuBarClass.menuBar);
         
         generateButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
@@ -411,6 +360,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
             }
         });
         
+        
         mainFrame.setPreferredSize(new Dimension(400,400));
         mainFrame.setLocationRelativeTo(null);
         
@@ -457,6 +407,11 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         }else{
             new BlueberryTechBarcodeEditor();
         }
+    }
+
+    
+    public JFrame getMainFrame(){
+        return mainFrame;
     }
     
     public void actionPerformed(ActionEvent arg0){
