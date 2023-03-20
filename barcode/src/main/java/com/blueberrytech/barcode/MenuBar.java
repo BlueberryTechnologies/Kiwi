@@ -92,6 +92,11 @@ public class MenuBar {
                 new ChooseDirectory();
             }
         });
+        selectPrinter.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+                new ChoosePrinter();
+            }
+        });
         
         previewGeneratedCodeButton = new JMenuItem("Preview Generated Code");
         
@@ -99,7 +104,6 @@ public class MenuBar {
         previewGeneratedCodeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 // Code preview
-                
                 mainGenerator.selectCodeImage();
                 ImageIcon icon = new ImageIcon(mainGenerator.getImageFile());
                 System.out.println("The button was pressed " + icon);

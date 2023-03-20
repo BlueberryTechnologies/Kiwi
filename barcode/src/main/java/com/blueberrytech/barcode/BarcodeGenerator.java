@@ -63,7 +63,7 @@ public class BarcodeGenerator{
     private static final File user_home = new File(System.getProperty("user.home"));
     File customFileLocation;
     static File defaultDirectoryToWrite = new File("");
-    PrintService[] printService;
+    static PrintService[] printService;
     PrintService currPrinter;
     private static Path generatedPath;
     private static boolean isCanceled;
@@ -215,7 +215,7 @@ public class BarcodeGenerator{
         return printRequestAttributeSet;
     }
 
-    public String returnPrinterName(){
+    public static String returnPrinterName(){
         //PrintRequestAttributeSet().add(new Copies(1));
         if (printService.length == 0){ // If the print service is zero then throws exception.
             JOptionPane.showMessageDialog(null,"No printer services available", "Aborting...",JOptionPane.WARNING_MESSAGE);

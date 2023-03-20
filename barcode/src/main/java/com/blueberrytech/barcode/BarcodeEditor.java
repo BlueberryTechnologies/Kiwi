@@ -62,7 +62,7 @@ public class BarcodeEditor implements ActionListener{
     JTextArea output;
     JScrollPane scrollPane;
     File customFileLocation;
-    JLabel currPrinter;
+    static JLabel currPrinter;
     ImageIcon icon;
 
     
@@ -127,7 +127,7 @@ public class BarcodeEditor implements ActionListener{
         
         userInputCode.setToolTipText("What kind of barcode would you like?");
         userInput.setToolTipText("Enter text you would like to print (Max 20 char)");
-        printerName = barcodeGenerator.returnPrinterName();
+        printerName = BarcodeGenerator.returnPrinterName();
         //printerIP  = generateBarcode.ReturnPrinterIP();
         printerNameLabel = new JLabel("Printer Name: " + printerName);
         printingLocation = new JLabel("Printing Location: " + BarcodeGenerator.getImageSavePath());
@@ -219,7 +219,6 @@ public class BarcodeEditor implements ActionListener{
         }
     }
 
-    
     public static JFrame getMainFrame(){
         return mainFrame;
     }
@@ -230,6 +229,7 @@ public class BarcodeEditor implements ActionListener{
         mainPanel.add(printerNameLabel);
         mainPanel.add(printingLocation);
         
+        comboBox.setSelectedIndex(0);
         mainPanel.add(comboBox);
         mainPanel.add(userInput);
         //mainPanel.add(imageButton);
