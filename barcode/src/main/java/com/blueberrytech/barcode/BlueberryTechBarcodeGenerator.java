@@ -9,12 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
 import javax.print.Doc;
 
-import java.awt.image.BufferedImage;
 import java.awt.print.PrinterJob;
-import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
 import javax.print.DocFlavor;
@@ -27,12 +24,9 @@ import javax.print.attribute.HashAttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Copies;
-import javax.print.attribute.standard.JobMediaSheetsSupported;
 import javax.print.attribute.standard.PrinterName;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 

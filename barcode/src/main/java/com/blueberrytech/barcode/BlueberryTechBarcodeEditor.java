@@ -6,9 +6,8 @@ package com.blueberrytech.barcode;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.awt.event.*;
-import javax.imageio.ImageIO;
+
 
 /*
  * Java Swing Imports
@@ -20,15 +19,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.JFileChooser;
 
 
@@ -39,12 +34,9 @@ import javax.swing.JFileChooser;
  */
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 
 
 /*
@@ -86,33 +78,17 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     /*
      * Directory Frame and Directory Panel Variables
      */
-    JFrame directoryFrame = new JFrame();
-    JPanel directoryPanel = new JPanel();
-    /*
-     * Printer Frame and Panel
-     */
-    JFrame printerListFrame = new JFrame();
-    JPanel printerListPanel = new JPanel();
-    JTextArea printerList = new JTextArea();
-
-    /* Generated Code Image Frame and Panel */
-    JFrame generatedCodeFrame = new JFrame();
-    JPanel generatedCodePanel = new JPanel();
+    
+    
 
     /* */
     JFileChooser chooser = new JFileChooser();
-    JLabel currLocation = new JLabel(" Current Location: " + barcodeGenerator.getImageSavePath());
     JLabel printerNameLabel;
     JLabel printingLocation;
     JTextField userInputCode = new JTextField();
     JTextField userInput = new JTextField();
     JTextArea output;
     JScrollPane scrollPane;
-    JMenu settingsMenu;
-    JMenu about;
-    JMenu codeOptions;
-    JMenuBar menuBar;
-    JMenuItem changeDirectoryButton, printerResourcesButton, selectPrinterButton, aboutButton, previewGeneratedCodeButton;
     File customFileLocation;
     JButton generateButton = new JButton("Generate Code");
     JButton printButton = new JButton("Print");
@@ -120,7 +96,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     JLabel currPrinter;
     ImageIcon icon;
 
-    MenuBar menuBarClass = new MenuBar();
+    //MenuBar menuBarClass = new MenuBar();
 
     
 
@@ -129,9 +105,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         final String[] dropdownChoices = { "QR Codes", "CODE128", "AZTEC", "PLAIN TEXT", "IMAGE" };
         final JComboBox<String> comboBox = new JComboBox<String>(dropdownChoices);
         
-        final String[] printerChoices = barcodeGenerator.getPrinterServiceNameList().toArray(new String[0]);
-        final JComboBox<String> printerComboBox = new JComboBox<String>(printerChoices);
-
+        
         imageButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
                 if (dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE")){
@@ -177,73 +151,8 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
                 }
             }
         });
-        final JButton dirButton = new JButton("Select Directory");
-        final JButton defDirButton = new JButton("Use Default Directory");
-        dirButton.addActionListener(new ActionListener(){
-            @Override public void actionPerformed(ActionEvent arg0) {
-                barcodeGenerator.setDirectory(false);
-                currLocation = new JLabel(" Current Location: " + barcodeGenerator.getImageSavePath());
-                directoryPanel.removeAll();
-                directoryPanel.add(currLocation);
-                directoryPanel.add(dirButton);
-                directoryPanel.add(defDirButton);
-                directoryPanel.revalidate();
-                directoryPanel.repaint();
-                JOptionPane.showMessageDialog(null,"Path Changed", "Action Successful...",JOptionPane.WARNING_MESSAGE);
-            }
-        });
-        
-        defDirButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0) {
-                barcodeGenerator.setDirectory(true);
-                currLocation = new JLabel(" Current Location: " + barcodeGenerator.getImageSavePath());
-                directoryPanel.removeAll();
-                directoryPanel.add(currLocation);
-                directoryPanel.add(dirButton);
-                directoryPanel.add(defDirButton);
-                directoryPanel.revalidate();
-                directoryPanel.repaint();
-                JOptionPane.showMessageDialog(null,"Path Changed", "Action Successful...",JOptionPane.WARNING_MESSAGE);
-            }
-        });
-        directoryFrame.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent e)
-            {
-                new BlueberryTechBarcodeEditor();
-            }
-        });
-        directoryPanel.add(currLocation);
-        directoryPanel.add(dirButton);
-        directoryPanel.add(defDirButton);
-        directoryPanel.setLayout(new GridLayout(0,1));
-        directoryFrame.add(directoryPanel, BorderLayout.CENTER);
-        /*
-            * Building the frame
-        */
-        directoryFrame.setPreferredSize(new Dimension(400,200));
-        directoryFrame.setLocationRelativeTo(null);
-        directoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        directoryFrame.setTitle("Choose Default Directory");
-        
-        /*
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         */
 
         
-
-
-
-        printerListFrame.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent e)
-            {
-                new BlueberryTechBarcodeEditor();
-            }
-        });
         
             
         
@@ -254,61 +163,12 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         printerNameLabel = new JLabel("Printer Name: " + printerName);
         printingLocation = new JLabel("Printing Location: " + barcodeGenerator.getImageSavePath());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
-        menuBar = new JMenuBar();
-        settingsMenu = new JMenu("Settings");
-        about = new JMenu("About");
-        aboutButton = new JMenuItem("About");
+
+
         
-        printerResourcesButton = new JMenuItem("Printer Resources");
-        printerResourcesButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0){
-                String websiteString = "https://blueberry.dev/products/barcode-editor/";
-                URI website;
-                try {
-                    website = new URI(websiteString);
-                    openWebpage(website);
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
-                
-                
-            }
-        });
-
-        selectPrinterButton = new JMenuItem("Select Printer");
-        printerListFrame.setPreferredSize(new Dimension(400,200));
-        printerListFrame.setLocationRelativeTo(null);
-        printerListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        printerListFrame.setTitle("Printers On Network");
-        selectPrinterButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0){
-                mainFrame.dispose();
-                currPrinter = new JLabel("Current Printer: " + barcodeGenerator.returnPrinterName());
-                printerListPanel.add(currPrinter);
-                printerListPanel.add(printerComboBox);
-                printerListFrame.add(printerListPanel, BorderLayout.CENTER);
-                printerListFrame.pack();
-                printerListPanel.setLayout(new GridLayout(0,1));
-                printerListPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
-                printerListFrame.setVisible(true);
-            }
-        });
-        
-        printerComboBox.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0){
-                barcodeGenerator.updatePrinter(printerChoices[printerComboBox.getSelectedIndex()]);
-                System.out.println("Changed values");
-                printerListPanel.removeAll();
-                currPrinter = new JLabel("Current Printer: " + barcodeGenerator.returnPrinterName());
-                printerListPanel.add(currPrinter);
-                printerListPanel.add(printerComboBox);
-                printerListPanel.revalidate();
-                printerListPanel.repaint();
-            }
-        });
 
 
-        mainFrame.setJMenuBar(menuBarClass.menuBar);
+        //mainFrame.setJMenuBar(menuBarClass.menuBar);
         
         generateButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
