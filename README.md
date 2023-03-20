@@ -22,6 +22,9 @@
 
 ## Issues
 
+If you would like to submit an issue or an enhancement please do so on the issues page of this repo [here](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues).
+
+Current Issues:
 - Image Generation/Printing is still broken (sorry)
 - Text Generation/Printing is still broken (sorry)
 
