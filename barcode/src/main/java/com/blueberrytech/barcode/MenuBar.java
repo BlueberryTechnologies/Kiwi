@@ -8,13 +8,11 @@ import java.awt.event.ActionListener;
  */
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
 
 
 
@@ -32,12 +30,9 @@ import java.net.URISyntaxException;
  */
 
 public class MenuBar {
-    BlueberryTechBarcodeEditor mainClass = new BlueberryTechBarcodeEditor();
-    BlueberryTechBarcodeGenerator mainGenerator = new BlueberryTechBarcodeGenerator();
-    GeneratedCodeMenu generatedCodeMenu = new GeneratedCodeMenu();
-    ChooseDirectory chooseDirectory = new ChooseDirectory();
-
-    ImageIcon icon;
+    //BarcodeEditor mainClass = new BarcodeEditor();
+    BarcodeGenerator mainGenerator = new BarcodeGenerator();
+    //ImageIcon icon;
 
     JMenuBar menuBar = new JMenuBar();
 
@@ -52,11 +47,6 @@ public class MenuBar {
     JMenuItem previewGeneratedCodeButton = new JMenuItem("Preview Generated Code");
     JMenuItem changeDirectory = new JMenuItem("Change Code Directory");
     JMenuItem selectPrinter = new JMenuItem("Select Printer");
-    
-    // Generated Code section of the Code Options menu
-    JLabel generatedCodeLabel = new JLabel();
-    JFrame generatedCodeFrame = new JFrame();
-    JPanel generatedCodePanel = new JPanel();
 
 
     public MenuBar(){
@@ -66,9 +56,9 @@ public class MenuBar {
          * ABOUT
          * 
          */
+        
         // Adding the elements to the about section
-        about.add(aboutButton);
-        about.add(printerResources);
+        
         // When you click the about element of the about section of the menu bar, this happens:
         aboutButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
@@ -84,7 +74,7 @@ public class MenuBar {
                 URI website;
                 try {
                     website = new URI(websiteString);
-                    BlueberryTechBarcodeEditor.openWebpage(website);
+                    BarcodeEditor.openWebpage(website);
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
@@ -96,39 +86,46 @@ public class MenuBar {
          * SETTINGS
          * 
          */
-        settings.add(changeDirectory);
-        settings.add(codeOptions);
-        settings.add(selectPrinter);
-        codeOptions.add(previewGeneratedCodeButton); // Adding a nested menu item for the code options
-
+        
         changeDirectory.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
-                disposeMainFrame();
                 new ChooseDirectory();
             }
         });
-
+        
         previewGeneratedCodeButton = new JMenuItem("Preview Generated Code");
+        
+        codeOptions.add(previewGeneratedCodeButton); // Adding a nested menu item for the code options
         previewGeneratedCodeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 // Code preview
-                disposeMainFrame();
+                
                 mainGenerator.selectCodeImage();
-                icon = new ImageIcon(mainGenerator.getImageFile());
+                ImageIcon icon = new ImageIcon(mainGenerator.getImageFile());
+                System.out.println("The button was pressed " + icon);
                 if(mainGenerator.getCanceledImage()){
-                    new BlueberryTechBarcodeEditor();
+                    //GeneratedCodeMenu.generatedCodeFrame.dispose();
                 }else{
-                    new GeneratedCodeMenu();
+                    new GeneratedCodeMenu(icon);
                 }
             }
         });
+        
+        
+
+        
 
         // Adding the JMenu elements to the menu bar
+        about.add(aboutButton);
+        about.add(printerResources);
+        settings.add(changeDirectory);
+        settings.add(codeOptions);
+        settings.add(selectPrinter);
         menuBar.add(about);
         menuBar.add(settings);
     }
 
-    private void disposeMainFrame(){
-        mainClass.getMainFrame().dispose();
+    public JMenuBar getMenuBar(){
+        return menuBar;
     }
 }

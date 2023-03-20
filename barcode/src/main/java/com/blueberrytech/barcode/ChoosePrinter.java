@@ -1,24 +1,11 @@
 package com.blueberrytech.barcode;
 
-/*
- * Awt + Misc Imports
- */
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.*;
-
 
 /*
  * Java Swing Imports
  */
 
-import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+
 
 
 
@@ -28,17 +15,15 @@ import javax.swing.JTextArea;
  */
 
 public class ChoosePrinter {
-
     /*
-     * Printer Frame and Panel
-     */
+
     JFrame printerListFrame = new JFrame();
     JPanel printerListPanel = new JPanel();
     JTextArea printerList = new JTextArea();
     MenuBar menuBar = new MenuBar();
-    BlueberryTechBarcodeEditor mainClass = new BlueberryTechBarcodeEditor();
-    BlueberryTechBarcodeGenerator mainGenerator = new BlueberryTechBarcodeGenerator();
-    final String[] printerChoices = BlueberryTechBarcodeGenerator.getPrinterServiceNameList().toArray(new String[0]);
+    BarcodeEditor mainClass = new BarcodeEditor();
+    BarcodeGenerator mainGenerator = new BarcodeGenerator();
+    final String[] printerChoices = BarcodeGenerator.getPrinterServiceNameList().toArray(new String[0]);
     final JComboBox<String> printerComboBox = new JComboBox<String>(printerChoices);
 
     public ChoosePrinter(){
@@ -48,7 +33,7 @@ public class ChoosePrinter {
         printerListFrame.setTitle("Printers On Network");
         menuBar.selectPrinter.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
-                BlueberryTechBarcodeEditor.mainFrame.dispose();
+                mainClass.mainFrame.dispose();
                 mainClass.currPrinter = new JLabel("Current Printer: " + mainGenerator.returnPrinterName());
                 printerListPanel.add(mainClass.currPrinter);
                 printerListPanel.add(printerComboBox);
@@ -75,8 +60,9 @@ public class ChoosePrinter {
         printerListFrame.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e)
             {
-                new BlueberryTechBarcodeEditor();
+                new BarcodeEditor();
             }
         });
     }
+    */
 }

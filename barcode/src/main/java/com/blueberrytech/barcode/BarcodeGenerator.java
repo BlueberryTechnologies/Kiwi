@@ -41,7 +41,7 @@ import javax.swing.filechooser.FileSystemView;
  import com.google.zxing.qrcode.QRCodeWriter;
  import com.google.zxing.common.BitMatrix;
 
-public class BlueberryTechBarcodeGenerator{
+public class BarcodeGenerator{
     
 
 
@@ -52,21 +52,21 @@ public class BlueberryTechBarcodeGenerator{
     String comboSelected = "";
     String finalPath = "";
     String textToWrite;
-    String targetFile;
-    String customLocation;
+    static String targetFile;
+    static String customLocation;
     String photoLocation;
     boolean isGenerated = false;
-    boolean selectedImage = false;
+    static boolean selectedImage = false;
     ImageIcon image;
     File file;
     private static String OS = System.getProperty("os.name").toLowerCase();
     private static final File user_home = new File(System.getProperty("user.home"));
     File customFileLocation;
-    File defaultDirectoryToWrite = new File("");
+    static File defaultDirectoryToWrite = new File("");
     PrintService[] printService;
     PrintService currPrinter;
     private static Path generatedPath;
-    private boolean isCanceled;
+    private static boolean isCanceled;
 
     public void setInitialPrinter(){
         printService = FindPrintService(PrintRequestAttributeSet());
@@ -260,14 +260,14 @@ public class BlueberryTechBarcodeGenerator{
         }
     }
     
-    private void setCanceledImage(boolean isCanceledLocal){
+    private static void setCanceledImage(boolean isCanceledLocal){
         isCanceled = isCanceledLocal;
     }
     public boolean getCanceledImage(){
         return isCanceled;
     }
 
-    public void setImageFile(String fileThatWasSelected){
+    public static void setImageFile(String fileThatWasSelected){
         targetFile = fileThatWasSelected;
     }
     public String getImageFile(){
@@ -276,7 +276,7 @@ public class BlueberryTechBarcodeGenerator{
     public String getReturnPath(){
         return finalPath;
     }
-    public String getImageSavePath(){
+    public static String getImageSavePath(){
         return getDirectory();
     }
     public String getCurrPrinter(){
@@ -289,7 +289,7 @@ public class BlueberryTechBarcodeGenerator{
     /*
      * Setting and getting directories
      */
-    public String getDirectory(){
+    public static String getDirectory(){
         try{
             if (getDefaultDirectory() == null){
 
@@ -309,11 +309,11 @@ public class BlueberryTechBarcodeGenerator{
         }
         return null;
     }
-    public File getDefaultDirectory(){
+    public static File getDefaultDirectory(){
         setDefaultDirectory();
         return defaultDirectoryToWrite;
     }
-    private void setDefaultDirectory(){
+    private static void setDefaultDirectory(){
         File defaultDirectory = new File("");
         if (OS.equals("win")){
             JOptionPane.showMessageDialog(null,"Windows not supported yet", "Aborting...",JOptionPane.WARNING_MESSAGE);
@@ -334,7 +334,7 @@ public class BlueberryTechBarcodeGenerator{
         }
         defaultDirectoryToWrite = defaultDirectory;
     }
-    public File setDirectory(boolean isDefault){
+    public static File setDirectory(boolean isDefault){
             if (!isDefault){
                 JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
                 jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

@@ -1,18 +1,12 @@
 package com.blueberrytech.barcode;
-
-/*
- * Awt + Misc Imports
- */
 import java.awt.*;
-
-
-/*
- * Java Swing Imports
- */
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -24,7 +18,7 @@ import javax.swing.JPanel;
 
 public class ChooseDirectory {
     // Directory Frame and Panel
-    BlueberryTechBarcodeGenerator mainGenerator = new BlueberryTechBarcodeGenerator();
+    BarcodeGenerator mainGenerator = new BarcodeGenerator();
     JFrame directoryFrame = new JFrame();
     JPanel directoryPanel = new JPanel();
 
@@ -33,19 +27,31 @@ public class ChooseDirectory {
     JButton defDirButton = new JButton("Use Default Directory");
 
     // Current location label
-    JLabel currLocation = new JLabel(" Current Location: " + mainGenerator.getImageSavePath());
+    JLabel currLocation = new JLabel(" Current Location: " + BarcodeGenerator.getImageSavePath());
     
 
     public ChooseDirectory(){
 
-        GenerateDirectoryWindow();
-        
-
+        directoryPanel.add(currLocation);
+        directoryPanel.add(dirButton);
+        directoryPanel.add(defDirButton);
+        directoryPanel.setLayout(new GridLayout(0,1));
+        directoryPanel.setSize(new Dimension(400,200));
+        directoryFrame.add(directoryPanel, BorderLayout.CENTER);
         /*
+            * Building the frame
+        */
+        directoryFrame.setSize(new Dimension(400,200));
+        directoryFrame.setLocationRelativeTo(null);
+        directoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        directoryFrame.setTitle("Choose Default Directory");
+        directoryFrame.setVisible(true);
+
+        
         dirButton.addActionListener(new ActionListener(){
             @Override public void actionPerformed(ActionEvent arg0) {
-                mainGenerator.setDirectory(false);
-                currLocation = new JLabel(" Current Location: " + mainGenerator.getImageSavePath());
+                BarcodeGenerator.setDirectory(false);
+                currLocation = new JLabel(" Current Location: " + BarcodeGenerator.getImageSavePath());
                 directoryPanel.removeAll();
                 directoryPanel.add(currLocation);
                 directoryPanel.add(dirButton);
@@ -58,8 +64,8 @@ public class ChooseDirectory {
         
         defDirButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-                mainGenerator.setDirectory(true);
-                currLocation = new JLabel(" Current Location: " + mainGenerator.getImageSavePath());
+                BarcodeGenerator.setDirectory(true);
+                currLocation = new JLabel(" Current Location: " + BarcodeGenerator.getImageSavePath());
                 directoryPanel.removeAll();
                 directoryPanel.add(currLocation);
                 directoryPanel.add(dirButton);
@@ -72,24 +78,9 @@ public class ChooseDirectory {
         directoryFrame.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e)
             {
-                new BlueberryTechBarcodeEditor();
+                BarcodeEditor.comboBox.setSelectedIndex(0);
+                BarcodeEditor.updateMainFrame();
             }
         });
-     */   
     }
-    public void GenerateDirectoryWindow(){
-        directoryPanel.add(currLocation);
-        directoryPanel.add(dirButton);
-        directoryPanel.add(defDirButton);
-        directoryPanel.setLayout(new GridLayout(0,1));
-        directoryFrame.add(directoryPanel, BorderLayout.CENTER);
-        /*
-            * Building the frame
-        */
-        directoryFrame.setPreferredSize(new Dimension(400,200));
-        directoryFrame.setLocationRelativeTo(null);
-        directoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        directoryFrame.setTitle("Choose Default Directory");
-    }
-
 }

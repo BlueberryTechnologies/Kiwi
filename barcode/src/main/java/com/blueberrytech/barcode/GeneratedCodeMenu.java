@@ -1,9 +1,6 @@
 package com.blueberrytech.barcode;
 
 import java.awt.Dimension;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,7 +12,7 @@ public class GeneratedCodeMenu {
     JPanel generatedCodePanel = new JPanel();
     ImageIcon icon;
 
-    public GeneratedCodeMenu(){
+    public GeneratedCodeMenu(ImageIcon icon){
         generatedCodeLabel.setIcon(icon);
         generatedCodeFrame.add(generatedCodePanel);
         generatedCodeFrame.setSize(new Dimension(210,230));
@@ -27,11 +24,5 @@ public class GeneratedCodeMenu {
         generatedCodeFrame.revalidate();
         generatedCodeFrame.repaint();
         generatedCodeFrame.setVisible(true);
-        generatedCodeFrame.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent e)
-            {
-                new BlueberryTechBarcodeEditor();
-            }
-        });
     }
 }

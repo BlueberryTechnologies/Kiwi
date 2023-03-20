@@ -1,18 +1,9 @@
 package com.blueberrytech.barcode;
 
-/*
- * Awt + Misc Imports
- */
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.*;
-
-
-/*
- * Java Swing Imports
- */
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,34 +16,29 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JFileChooser;
-
-
-
-
-/*
- * Java IO Imports
- */
-
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
 
-/*
- * Print Imports
- */
 
 
+public class BarcodeEditor implements ActionListener{
+    // Using the Barcode Generator Class
+    static BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
 
 
-public class BlueberryTechBarcodeEditor implements ActionListener{
-    
-    static BlueberryTechBarcodeGenerator barcodeGenerator = new BlueberryTechBarcodeGenerator();
+    // Java UI Variables
+    // Frame & Panel
+    static JFrame mainFrame = new JFrame();
+    static JPanel mainPanel = new JPanel();
+    // Buttons
+    static JButton generateButton = new JButton("Generate Code");
+    static JButton printButton = new JButton("Print");
+    static JButton imageButton = new JButton("Select Image");
 
-    /*
-     * Variables
-     */
+    // Variables
     
     String printerName = "";
     String printerIP = "";
@@ -68,42 +54,26 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
     boolean selectedImage = false;
     ImageIcon image;
     File file;
-
-    /*
-     * Main Frame and Main Panel Variables
-     */
-    static JFrame mainFrame = new JFrame();
-    JPanel mainPanel = new JPanel();
-
-    /*
-     * Directory Frame and Directory Panel Variables
-     */
-    
-    
-
-    /* */
     JFileChooser chooser = new JFileChooser();
-    JLabel printerNameLabel;
-    JLabel printingLocation;
+    static JLabel printerNameLabel;
+    static JLabel printingLocation;
     JTextField userInputCode = new JTextField();
-    JTextField userInput = new JTextField();
+    static JTextField userInput = new JTextField();
     JTextArea output;
     JScrollPane scrollPane;
     File customFileLocation;
-    JButton generateButton = new JButton("Generate Code");
-    JButton printButton = new JButton("Print");
-    JButton imageButton = new JButton("Select Image");
     JLabel currPrinter;
     ImageIcon icon;
 
-    //MenuBar menuBarClass = new MenuBar();
-
+    
+    MenuBar menuBarClass = new MenuBar();
+    final static String[] dropdownChoices = { "QR Codes", "CODE128", "AZTEC", "PLAIN TEXT", "IMAGE" };
+    final static JComboBox<String> comboBox = new JComboBox<String>(dropdownChoices);
+    
     
 
-    public BlueberryTechBarcodeEditor(){
+    public BarcodeEditor(){
         
-        final String[] dropdownChoices = { "QR Codes", "CODE128", "AZTEC", "PLAIN TEXT", "IMAGE" };
-        final JComboBox<String> comboBox = new JComboBox<String>(dropdownChoices);
         
         
         imageButton.addActionListener(new ActionListener(){
@@ -119,7 +89,6 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
                     mainPanel.remove(userInput);
                     mainPanel.remove(generateButton);
                     mainPanel.remove(printButton);
-                    
                     mainPanel.add(imageButton);
                     mainPanel.add(printButton);
                     mainPanel.revalidate();
@@ -161,14 +130,13 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         printerName = barcodeGenerator.returnPrinterName();
         //printerIP  = generateBarcode.ReturnPrinterIP();
         printerNameLabel = new JLabel("Printer Name: " + printerName);
-        printingLocation = new JLabel("Printing Location: " + barcodeGenerator.getImageSavePath());
+        printingLocation = new JLabel("Printing Location: " + BarcodeGenerator.getImageSavePath());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
 
 
         
 
-
-        //mainFrame.setJMenuBar(menuBarClass.menuBar);
+        mainFrame.setJMenuBar(menuBarClass.getMenuBar());
         
         generateButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
@@ -210,7 +178,7 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
                 
                 
                 if (dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE")) {
-                    if (!barcodeGenerator.selectedImage){
+                    if (!BarcodeGenerator.selectedImage){
                         JOptionPane.showMessageDialog(null, "An Image Was Not Selected", "Aborting...",JOptionPane.WARNING_MESSAGE);
                     }else{
                         barcodeGenerator.PrintBarcode(barcodeGenerator.getImageFile(), false);
@@ -237,24 +205,6 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
         
         
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        mainFrame.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent e){
-                JFrame frame = (JFrame)e.getSource();
-
-                int result = JOptionPane.showConfirmDialog(
-                frame,
-                "Are you sure you want to exit the Blueberry Tech Barcode Editor?",
-                "Exit Application",
-                JOptionPane.YES_NO_OPTION);
-                
-                if (result == JOptionPane.YES_OPTION){
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                }else{
-                    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                }
-                
-            }
-        });
         mainFrame.setTitle("Blueberry Technologies Barcode Editor");
         mainFrame.pack();
         mainFrame.setVisible(true);
@@ -262,16 +212,33 @@ public class BlueberryTechBarcodeEditor implements ActionListener{
 
     public static void main (String args[]){
         barcodeGenerator.setInitialPrinter();
-        if(barcodeGenerator.getImageSavePath() == null){
+        if(BarcodeGenerator.getImageSavePath() == null){
             System.out.println("This is null");
         }else{
-            new BlueberryTechBarcodeEditor();
+            new BarcodeEditor();
         }
     }
 
     
-    public JFrame getMainFrame(){
+    public static JFrame getMainFrame(){
         return mainFrame;
+    }
+    public static void updateMainFrame(){
+        mainPanel.removeAll();
+        printingLocation = new JLabel("Printing Location: " + BarcodeGenerator.getImageSavePath());
+        
+        mainPanel.add(printerNameLabel);
+        mainPanel.add(printingLocation);
+        
+        mainPanel.add(comboBox);
+        mainPanel.add(userInput);
+        //mainPanel.add(imageButton);
+        mainPanel.add(generateButton);
+        mainPanel.add(printButton);
+        mainPanel.setLayout(new GridLayout(0,1));
+        
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }
     
     public void actionPerformed(ActionEvent arg0){
