@@ -9,6 +9,7 @@
  * 
  * Last Date Modified: 03/20/2023
  * Last User Modified: gh/rileyrichard
+ * License: GPL-3.0
  */
 
 package com.blueberrytech.barcode;

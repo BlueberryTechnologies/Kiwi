@@ -54,7 +54,8 @@ To view the documentation for this program, please head to our website linked be
       - Image generation
       - Setters
       - Getters
-    - Comment Code (maybe)
+    - Comment Code
+      - If anyone wants to fork, the code is fully commented so it's easier to understand.
 
 - ##### Bug Fixes
 

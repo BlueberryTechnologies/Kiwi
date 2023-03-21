@@ -1,6 +1,17 @@
+/*
+ * Blueberry Technologies Barcode Editor
+ * Barcode Editor Class
+ * 
+ * This class generates the main UI for the program.
+ * This houses mostly user input but does reference the main program class called BarcodeGenerator.
+ * 
+ * Last Date Modified: 03/20/2023
+ * Last User Modified: gh/rileyrichard
+ * License: GPL-3.0
+ */
 package com.blueberrytech.barcode;
 
-
+// Java Imports
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,55 +35,33 @@ import java.net.URL;
 
 
 
-public class BarcodeEditor implements ActionListener{
-    // Using the Barcode Generator Class
+public class BarcodeEditor{ // Implements ActionListener
+
+    // Referencing Barcode Generator Class
     static BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
 
-
-    // Java UI Variables
     // Frame & Panel
-    static JFrame mainFrame = new JFrame();
-    static JPanel mainPanel = new JPanel();
-    // Buttons
-    static JButton generateButton = new JButton("Generate Code");
-    static JButton printButton = new JButton("Print");
-    static JButton imageButton = new JButton("Select Image");
-
-    // Variables
-    
-    String printerName = "";
-    String printerIP = "";
-    String userChoice = "";
-    String userChoiceCode = "";
-    String comboSelected = "";
-    String finalPath = "";
-    String textToWrite;
-    String targetFile;
-    String customLocation;
-    String photoLocation;
-    boolean isGenerated = false;
-    boolean selectedImage = false;
-    ImageIcon image;
-    File file;
-    JFileChooser chooser = new JFileChooser();
-    static JLabel printerNameLabel;
-    static JLabel printingLocation;
-    JTextField userInputCode = new JTextField();
-    static JTextField userInput = new JTextField();
-    JTextArea output;
-    JScrollPane scrollPane;
-    File customFileLocation;
-    static JLabel currPrinter;
-    ImageIcon icon;
-
-    
-    MenuBar menuBarClass = new MenuBar();
-    final static String[] dropdownChoices = { "QR Codes", "CODE128", "AZTEC", "PLAIN TEXT", "IMAGE" };
-    final static JComboBox<String> comboBox = new JComboBox<String>(dropdownChoices);
+    static JFrame mainFrame = new JFrame(); // Creates the mainFrame.
+    static JPanel mainPanel = new JPanel(); // Creates the mainPanel.
+    static JButton generateButton = new JButton("Generate Code"); // Makes a button for generating the code.
+    static JButton printButton = new JButton("Print"); // Makes a button for printing the codes.
+    static JButton imageButton = new JButton("Select Image"); // Makes a button for selecting an image.
+    static JTextField userInputCode = new JTextField(); // Makes a new JTextField for userInput code.
+    static JTextField userInput = new JTextField(); // Makes a new JTextField for user input.
+    static JLabel printerNameLabel; // Makes a new JLabel for the printer name.
+    static JLabel printingLocation; // Makes a new JLabel for the printer location.
+    static JLabel currPrinter; // Makes a new JLabel for the current printer.
+    String printerName = ""; // A string for the current printer name.
+    boolean isGenerated = false; // A boolean for if the code is generated or not.
+    boolean selectedImage = false; // A boolean for if the image is selected.
     
     
-
-    public BarcodeEditor(){
+    MenuBar menuBarClass = new MenuBar(); // Makes a reference to the menuBar class.
+    
+    final static String[] dropdownChoices = { "QR Codes", "CODE128", "AZTEC", "PLAIN TEXT", "IMAGE" }; // An array of the choices of things the user can print.
+    final static JComboBox<String> comboBox = new JComboBox<String>(dropdownChoices); // Makes a comboBox of the choices listed above.
+    
+    public BarcodeEditor(){ // BarcodeEditor Constructor.
         
         
         
@@ -208,7 +197,7 @@ public class BarcodeEditor implements ActionListener{
         mainFrame.setTitle("Blueberry Technologies Barcode Editor");
         mainFrame.pack();
         mainFrame.setVisible(true);
-    }
+    } // End of constructor.
 
     public static void main (String args[]){
         barcodeGenerator.setInitialPrinter();
@@ -240,10 +229,12 @@ public class BarcodeEditor implements ActionListener{
         mainPanel.revalidate();
         mainPanel.repaint();
     }
-    
+
+    /*
     public void actionPerformed(ActionEvent arg0){
 
     }
+    */
 
     //https://stackoverflow.com/questions/5226212/how-to-open-the-default-webbrowser-using-java
     
