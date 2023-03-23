@@ -7,14 +7,6 @@
 ## Support
 [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/blueberrytech)
 
-![License](https://img.shields.io/github/license/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
-![Version](https://img.shields.io/github/v/release/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
-![Downloads](https://img.shields.io/github/downloads/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/total)
-![Commits](https://img.shields.io/github/commit-activity/m/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
-
-## Support
-[![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/blueberrytech)
-
 ## Features
 
 - MacOS and Linux Support (Windows Coming Soon)
@@ -45,13 +37,13 @@ If you would like to submit an issue or an enhancement please do so on the issue
 #### 1.0.9 (Coming Soon)
 
 - SQUASH BUGS
+- Add the option to select size of generated codes.
 
-#### 1.0.8 (Coming Soon)
+#### 1.0.8
 
 - ##### New Features
 
   - Add Official Windows Support
-  - Add the option to select size of generated code.
   - Organize code
     - Organize groups of features in UI
       - Frame
