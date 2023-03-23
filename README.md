@@ -7,6 +7,14 @@
 ## Support
 [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/blueberrytech)
 
+![License](https://img.shields.io/github/license/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
+![Version](https://img.shields.io/github/v/release/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
+![Downloads](https://img.shields.io/github/downloads/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/total)
+![Commits](https://img.shields.io/github/commit-activity/m/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
+
+## Support
+[![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/blueberrytech)
+
 ## Features
 
 - MacOS and Linux Support (Windows Coming Soon)
@@ -20,13 +28,12 @@
 
 ---
 
-## Issues
+## Documentation
+
+To view the documentation for this program, please head to our website linked below.
+[Blueberry Technologies Barcode Editor Documentation](https://blueberry.dev/products/barcode-editor)
 
 If you would like to submit an issue or an enhancement please do so on the issues page of this repo [here](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues).
-
-Current Issues:
-- Image Generation/Printing is still broken (sorry)
-- Text Generation/Printing is still broken (sorry)
 
 ## Changelog
 
@@ -41,20 +48,30 @@ Current Issues:
 
 #### 1.0.8 (Coming Soon)
 
-- Add Official Windows Support
-- Changed Printer Resources to point to correct webpage.
-- Organize code
-  - Organize groups of features in UI
-    - Frame
-    - Panel
-    - Buttons
-    - Menu
-  - Also organize generator class
-    - Code generation
-    - Image generation
-    - Setters
-    - Getters
-  - Comment Code (maybe)
+- ##### New Features
+
+  - Add Official Windows Support
+  - Add the option to select size of generated code.
+  - Organize code
+    - Organize groups of features in UI
+      - Frame
+      - Panel
+      - Buttons
+      - Menu
+    - Also organize generator class
+      - Code generation
+      - Image generation
+      - Setters
+      - Getters
+    - Comment Code
+      - If anyone wants to fork, the code is fully commented so it's easier to understand.
+
+- ##### Bug Fixes
+
+  - Fixed an issue printing text and images [#3](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues/3)
+  - Changed Printer Resources to point to correct webpage. [#4](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues/4)
+  - Fixed an issue with UI not reopening after code preview. [#15](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues/15)
+  - Fixed incorrect version in the about menu. [#18](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues/18)
 
 #### 1.0.7
 
