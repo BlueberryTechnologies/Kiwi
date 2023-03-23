@@ -315,8 +315,13 @@ public class BarcodeGenerator{
     }
     private static void setDefaultDirectory(){
         File defaultDirectory = new File("");
-        if (OS.equals("win")){
-            JOptionPane.showMessageDialog(null,"Windows not supported yet", "Aborting...",JOptionPane.WARNING_MESSAGE);
+        System.out.println(user_home);
+        if (OS.contains("windows") || OS.contains("win")){
+            defaultDirectory = new File(user_home + "\\Documents", "BBTBE");
+            if(!defaultDirectory.exists()){
+                JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.WARNING_MESSAGE);
+                defaultDirectory.mkdirs();
+            }
         }else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")){ // Checks if the operating system is a Linux Variant.
             defaultDirectory = new File(user_home, "BBTBE");
             if(!defaultDirectory.exists()){
