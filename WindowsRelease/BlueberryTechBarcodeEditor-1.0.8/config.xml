@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>/Users/riley/OneDrive/Blueberry Tech/Programming/Blueberry-Tech-Barcode-Editor/Blueberry-Tech-Barcode-Editor.jar</jar>
+  <jar>/Users/riley/OneDrive/Blueberry Tech/Programming/Blueberry-Tech-Barcode-Editor/Blueberry-Tech-Barcode-Editor-1.0.8.jar</jar>
   <outfile>/Users/riley/OneDrive/Blueberry Tech/Programming/Blueberry-Tech-Barcode-Editor/WindowsRelease/BlueberryTechBarcodeEditor-1.0.8/BlueberryTechBarcodeEditor.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
