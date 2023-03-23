@@ -1,3 +1,14 @@
+/*
+ * Blueberry Technologies Barcode Editor
+ * Barcode Generator Class
+ * 
+ * This class is the main generator for printing and generating codes.
+ * 
+ * 
+ * Last Date Modified: 03/23/2023
+ * Last User Modified: gh/rileyrichard
+ * License: GPL-3.0
+ */
 package com.blueberrytech.barcode;
 import java.io.File;
 import java.io.FileInputStream;
@@ -104,17 +115,23 @@ public class BarcodeGenerator{
                 MatrixToImageWriter.writeToPath(code128Matrix, "jpg", Paths.get(path));
                 setGeneratedPath(Paths.get(path));
                 System.out.println("The generated path is: " + getGeneratedPath());
+                finalPath = path;
+                JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
             }else if (algo.equals("AZTEC")){
                 AztecWriter aztecWriter = new AztecWriter();
                 BitMatrix aztecMatrix = aztecWriter.encode(text, BarcodeFormat.AZTEC, 200, 200);
                 MatrixToImageWriter.writeToPath(aztecMatrix, "jpg", Paths.get(path));
                 setGeneratedPath(Paths.get(path));
+                finalPath = path;
+                JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
                 System.out.println("The generated path is: " + getGeneratedPath());               //JOptionPane.showMessageDialog(null,"AZTEC Code Created...", "Success...",JOptionPane.WARNING_MESSAGE);
             }else if (algo.equals("QR Codes")){
                 QRCodeWriter qrWriter = new QRCodeWriter(); 
                 BitMatrix qrMatrix = qrWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
                 MatrixToImageWriter.writeToPath(qrMatrix, "jpg", Paths.get(path));
                 setGeneratedPath(Paths.get(path));
+                finalPath = path;
+                JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
                 System.out.println("The generated path is: " + getGeneratedPath());
             }else if (algo.equals("PLAIN TEXT")){
                 PrintBarcode(text, true);
@@ -127,8 +144,7 @@ public class BarcodeGenerator{
             if(algo.equals("PLAIN TEXT") || !algo.equals("IMAGE")){
                 // This is a holder because the algo check doesnt work right.
             }else{
-                finalPath = path;
-                JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
+                System.out.println("");
             }
         }catch(Exception e){
             System.out.println("An exception has been thrown:\n> " + e.getMessage());
@@ -198,7 +214,8 @@ public class BarcodeGenerator{
         pathString = pathString.replace(" ", "");
         generatedPath = Paths.get(pathString);
     }
-    public Path getGeneratedPath(){
+    public static Path getGeneratedPath(){
+        System.out.println("Path:" + generatedPath);
         return generatedPath;
     }
 
@@ -270,7 +287,7 @@ public class BarcodeGenerator{
     public static void setImageFile(String fileThatWasSelected){
         targetFile = fileThatWasSelected;
     }
-    public String getImageFile(){
+    public static String getImageFile(){
         return targetFile;
     }
     public String getReturnPath(){

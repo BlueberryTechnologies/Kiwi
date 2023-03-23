@@ -91,7 +91,7 @@ public class MenuBar {
         previewGeneratedCodeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 mainGenerator.selectCodeImage(); // Prompts the user with a file explorer having them pick an image (code) they would like displayed. This defaults to the current directory set in the BarcodeGenerator class.
-                ImageIcon icon = new ImageIcon(mainGenerator.getImageFile()); // Makes a new ImageIcon and sets it to the image that was selected by the user.
+                ImageIcon icon = new ImageIcon(BarcodeGenerator.getImageFile()); // Makes a new ImageIcon and sets it to the image that was selected by the user.
                 if(!mainGenerator.getCanceledImage()){ // If the image selection was not canceled then display the code menu using a new instance of GeneratedCodeMenu() and icon as a parameter.
                     new GeneratedCodeMenu(icon);
                 }

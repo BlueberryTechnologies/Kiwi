@@ -5,7 +5,7 @@
  * This class generates the main UI for the program.
  * This houses mostly user input but does reference the main program class called BarcodeGenerator.
  * 
- * Last Date Modified: 03/20/2023
+ * Last Date Modified: 03/23/2023
  * Last User Modified: gh/rileyrichard
  * License: GPL-3.0
  */
@@ -16,18 +16,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JFileChooser;
-import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -170,7 +165,7 @@ public class BarcodeEditor{ // Implements ActionListener
                     if (!BarcodeGenerator.selectedImage){
                         JOptionPane.showMessageDialog(null, "An Image Was Not Selected", "Aborting...",JOptionPane.WARNING_MESSAGE);
                     }else{
-                        barcodeGenerator.PrintBarcode(barcodeGenerator.getImageFile(), false);
+                        barcodeGenerator.PrintBarcode(BarcodeGenerator.getImageFile(), false);
                         selectedImage = false; // No image was selected
                     }
                 }
