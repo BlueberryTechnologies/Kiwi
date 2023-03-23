@@ -21,4 +21,18 @@
     <minVersion>17.0.0</minVersion>
     <maxVersion></maxVersion>
   </jre>
+  <versionInfo>
+    <fileVersion>1.0.8.0</fileVersion>
+    <txtFileVersion>1.0.8</txtFileVersion>
+    <fileDescription>A printer utility in Java!</fileDescription>
+    <copyright>Blueberry Technologies</copyright>
+    <productVersion>1.0.8.0</productVersion>
+    <txtProductVersion>1.0.8</txtProductVersion>
+    <productName>Blueberry Tech Barcode Editor</productName>
+    <companyName>Blueberry Technologies</companyName>
+    <internalName>BBTBE</internalName>
+    <originalFilename>Blueberry-Tech-Barcode-Editor.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>ENGLISH_US</language>
+  </versionInfo>
 </launch4jConfig>
