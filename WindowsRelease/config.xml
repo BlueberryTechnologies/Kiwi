@@ -18,7 +18,7 @@
     <path>jre</path>
     <requiresJdk>false</requiresJdk>
     <requires64Bit>false</requires64Bit>
-    <minVersion></minVersion>
+    <minVersion>17.0.0</minVersion>
     <maxVersion></maxVersion>
   </jre>
 </launch4jConfig>
