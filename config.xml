@@ -18,7 +18,7 @@
     <path>c:\GlobalJre;%JAVA_HOME%</path>
     <requiresJdk>false</requiresJdk>
     <requires64Bit>false</requires64Bit>
-    <minVersion></minVersion>
+    <minVersion>8.0</minVersion>
     <maxVersion></maxVersion>
   </jre>
   <versionInfo>
