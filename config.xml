@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>/Users/riley/OneDrive/Blueberry Tech/Programming/Blueberry-Tech-Barcode-Editor/Blueberry-Tech-Barcode-Editor.jar</jar>
-  <outfile>/Users/riley/OneDrive/Blueberry Tech/Programming/Blueberry-Tech-Barcode-Editor/Blueberry-Tech-Barcode-Editor.exe</outfile>
+  <jar>/Users/riley/OneDrive/Blueberry Tech/Programming/Blueberry-Tech-Barcode-Editor/Blueberry-Tech-Barcode-Editor-1.0.8.2.jar</jar>
+  <outfile>/Users/riley/OneDrive/Blueberry Tech/Programming/Blueberry-Tech-Barcode-Editor/WindowsRelease/BlueberryTechBarcodeEditor-1.0.8.1/BlueberryTechBarcodeEditor-1.0.8.2.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
@@ -13,7 +13,7 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon></icon>
+  <icon>/Users/riley/Downloads/logotransparent.ico</icon>
   <jre>
     <path>jre</path>
     <requiresJdk>false</requiresJdk>
@@ -21,4 +21,18 @@
     <minVersion></minVersion>
     <maxVersion></maxVersion>
   </jre>
+  <versionInfo>
+    <fileVersion>1.0.8.2</fileVersion>
+    <txtFileVersion>1.0.8.2</txtFileVersion>
+    <fileDescription>A printer utility in Java!</fileDescription>
+    <copyright>Blueberry Technologies</copyright>
+    <productVersion>1.0.8.2</productVersion>
+    <txtProductVersion>1.0.8.2</txtProductVersion>
+    <productName>Blueberry Tech Barcode Editor</productName>
+    <companyName>Blueberry Technologies</companyName>
+    <internalName>BBTBE</internalName>
+    <originalFilename>BlueberryTechBarcodeEditor-1.0.8.2.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>ENGLISH_US</language>
+  </versionInfo>
 </launch4jConfig>
