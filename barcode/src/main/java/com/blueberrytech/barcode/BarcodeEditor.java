@@ -225,12 +225,6 @@ public class BarcodeEditor{ // Implements ActionListener
         mainPanel.repaint();
     }
 
-    /*
-    public void actionPerformed(ActionEvent arg0){
-
-    }
-    */
-
     //https://stackoverflow.com/questions/5226212/how-to-open-the-default-webbrowser-using-java
     
     public static boolean openWebpage(URI uri) {
