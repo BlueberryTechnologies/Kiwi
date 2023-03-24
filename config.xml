@@ -3,7 +3,7 @@
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
   <jar>/Users/riley/OneDrive/Blueberry Tech/Programming/Blueberry-Tech-Barcode-Editor/Blueberry-Tech-Barcode-Editor-1.0.8.2.jar</jar>
-  <outfile>/Users/riley/OneDrive/Blueberry Tech/Programming/Blueberry-Tech-Barcode-Editor/WindowsRelease/BlueberryTechBarcodeEditor-1.0.8.1/BlueberryTechBarcodeEditor-1.0.8.2.exe</outfile>
+  <outfile>/Users/riley/OneDrive/Blueberry Tech/Programming/Blueberry-Tech-Barcode-Editor/WindowsRelease/BlueberryTechBarcodeEditor-1.0.8.2/BlueberryTechBarcodeEditor-1.0.8.2.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
@@ -15,7 +15,7 @@
   <manifest></manifest>
   <icon>/Users/riley/Downloads/logotransparent.ico</icon>
   <jre>
-    <path>jre</path>
+    <path>%JAVA_HOME%</path>
     <requiresJdk>false</requiresJdk>
     <requires64Bit>false</requires64Bit>
     <minVersion></minVersion>
