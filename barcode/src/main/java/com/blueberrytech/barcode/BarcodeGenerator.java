@@ -98,17 +98,18 @@ public class BarcodeGenerator{
          *              -> String
          */
         String checkedText = text;
+        
         try{
             File barcodeImages = new File(getDirectory(), "/barcode_images"); // Establishes a directory to save the barcode photos to.
             if (!barcodeImages.exists()){ // If the folder doesn't exist in the specified directory, then it creates one.
                 barcodeImages.mkdirs();
             }
-            String path = barcodeImages + "/" + text + ".png"; // The path that is set for every barcode created.
+            System.out.println("Compliance: " + checkIfStringIsLink(checkedText));
+            String path = barcodeImages + "/" + checkIfStringIsLink(checkedText) + ".png"; // The path that is set for every barcode created.
             
             /*
              * If algorithm is set as different, then it will generate a different barcode.
              */
-            System.out.println("Checked Text: " + checkedText);
             if (algo.equals("CODE128")){
                 Code128Writer code128Writer = new Code128Writer();
                 BitMatrix code128Matrix = code128Writer.encode(text, BarcodeFormat.CODE_128, 200, 200);
@@ -220,7 +221,7 @@ public class BarcodeGenerator{
     }
 
     public boolean checkIfTextValid(String text){
-        if (text.matches("[a-zA-Z_0-9]+")){
+        if (text.matches("[a-zA-Z_0-9/:.]+")){
             return true;
         }else{
             return false;
@@ -240,6 +241,18 @@ public class BarcodeGenerator{
         }
         PrintService ps = printService[0];
         return ps.getName();
+    }
+    private String checkIfStringIsLink(String link){
+        if (link.contains(".")){
+            link = link.replace(".", "");
+        }
+        if (link.contains("/")){
+            link = link.replace("/", "");
+        }
+        if (link.contains(":")){
+            link = link.replace(":", "");
+        }
+        return link;
     }
     public void selectCodeImage(){
         String updatedImagePath = getImageSavePath() + "/barcode_images";

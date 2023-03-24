@@ -1,7 +1,5 @@
 # Blueberry Tech Barcode Editor
 
-## [blueberry.dev](https://blueberry.dev/products/barcode-editor)
-
 ![License](https://img.shields.io/github/license/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
 ![Version](https://img.shields.io/github/v/release/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
 ![Downloads](https://img.shields.io/github/downloads/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/total)
@@ -40,8 +38,12 @@ If you would like to submit an issue or an enhancement please do so on the issue
 
 #### 1.0.9 (Coming Soon)
 
-- SQUASH BUGS
-- Add the option to select size of generated codes.
+- ##### New Features
+
+  - Add the option to select size of generated codes.
+
+- ##### Bug Fixes
+  - Can't generate a link because of invalid characters. [#19](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues/19)
 
 #### 1.0.8
 

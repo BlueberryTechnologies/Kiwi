@@ -61,7 +61,7 @@ public class MenuBar {
         // This is an action listener for the printer resources button inside of the about container on the menu bar.
         printerResources.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
-                String websiteString = "https://blueberry.dev/products/barcode-editor/"; // This sets a string to where the user is going to be taken for printer resources.
+                String websiteString = "https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki"; // This sets a string to where the user is going to be taken for printer resources.
                 URI website; // This makes a new URI called website.
                 try { // This is a try/catch for opening a webpage.
                     website = new URI(websiteString); // Sets website to websiteString but then makes it into a URI.
