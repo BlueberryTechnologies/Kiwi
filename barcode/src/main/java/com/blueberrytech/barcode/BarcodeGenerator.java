@@ -221,7 +221,7 @@ public class BarcodeGenerator{
     }
 
     public boolean checkIfTextValid(String text){
-        if (text.matches("[a-zA-Z_0-9/:.?]+")){
+        if (text.matches("[a-zA-Z_0-9/:.?=-]+")){
             return true;
         }else{
             return false;
@@ -254,6 +254,12 @@ public class BarcodeGenerator{
         }
         if (link.contains("?")){
             link = link.replace("?", "");
+        }
+        if (link.contains("=")){
+            link = link.replace("=", "");
+        }
+        if (link.contains("-")){
+            link = link.replace("-", "");
         }
         return link;
     }
