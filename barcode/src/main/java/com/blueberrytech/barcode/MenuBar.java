@@ -46,7 +46,7 @@ public class MenuBar {
     JMenuItem changeDirectory = new JMenuItem("Change Code Directory"); // This is a JMenuItem for changing the current directory to save the images of the generated barcodes.
     JMenuItem selectPrinter = new JMenuItem("Select Printer"); // This is a JMenuItem for selecting a printer to print to.
 
-    String latestVersion = "1.0.8"; // This is a string of the latest version
+    String latestVersion = "1.0.8.3"; // This is a string of the latest version
 
     public MenuBar(){ // Menu Bar constructor
 

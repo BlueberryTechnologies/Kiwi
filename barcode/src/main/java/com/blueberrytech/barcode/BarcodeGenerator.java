@@ -1,11 +1,12 @@
 /*
+ * NOT FULLY COMMENTED YET!
  * Blueberry Technologies Barcode Editor
  * Barcode Generator Class
  * 
  * This class is the main generator for printing and generating codes.
  * 
  * 
- * Last Date Modified: 03/23/2023
+ * Last Date Modified: 03/24/2023
  * Last User Modified: gh/rileyrichard
  * License: GPL-3.0
  */
@@ -221,7 +222,7 @@ public class BarcodeGenerator{
     }
 
     public boolean checkIfTextValid(String text){
-        if (text.matches("[a-zA-Z_0-9/:.]+")){
+        if (text.matches("[a-zA-Z_0-9/:.?=-]+")){
             return true;
         }else{
             return false;
@@ -251,6 +252,15 @@ public class BarcodeGenerator{
         }
         if (link.contains(":")){
             link = link.replace(":", "");
+        }
+        if (link.contains("?")){
+            link = link.replace("?", "");
+        }
+        if (link.contains("=")){
+            link = link.replace("=", "");
+        }
+        if (link.contains("-")){
+            link = link.replace("-", "");
         }
         return link;
     }
