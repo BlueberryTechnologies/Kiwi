@@ -1,4 +1,5 @@
 /*
+ * NOT FULLY COMMENTED YET!
  * Blueberry Technologies Barcode Editor
  * Barcode Generator Class
  * 
