@@ -15,7 +15,7 @@
   <manifest></manifest>
   <icon>/Users/riley/Downloads/logotransparent.ico</icon>
   <jre>
-    <path>%JAVA_HOME%</path>
+    <path>c:\GlobalJre;%JAVA_HOME%</path>
     <requiresJdk>false</requiresJdk>
     <requires64Bit>false</requires64Bit>
     <minVersion></minVersion>
