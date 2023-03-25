@@ -23,6 +23,7 @@ import java.util.Scanner;
 
 import javax.print.Doc;
 
+import java.awt.Dimension;
 import java.awt.print.PrinterJob;
 import java.util.List;
 import java.util.ArrayList;
@@ -80,6 +81,9 @@ public class BarcodeGenerator{
     private static Path generatedPath;
     private static boolean isCanceled;
 
+    private static int codeHeight = 200;
+    private static int codeWidth = 200;
+
     public void setInitialPrinter(){
         printService = FindPrintService(PrintRequestAttributeSet());
     }
@@ -113,7 +117,7 @@ public class BarcodeGenerator{
              */
             if (algo.equals("CODE128")){
                 Code128Writer code128Writer = new Code128Writer();
-                BitMatrix code128Matrix = code128Writer.encode(text, BarcodeFormat.CODE_128, 200, 200);
+                BitMatrix code128Matrix = code128Writer.encode(text, BarcodeFormat.CODE_128, getCodeWidth(), getCodeHeight());
                 MatrixToImageWriter.writeToPath(code128Matrix, "jpg", Paths.get(path));
                 setGeneratedPath(Paths.get(path));
                 System.out.println("The generated path is: " + getGeneratedPath());
@@ -121,7 +125,7 @@ public class BarcodeGenerator{
                 JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
             }else if (algo.equals("AZTEC")){
                 AztecWriter aztecWriter = new AztecWriter();
-                BitMatrix aztecMatrix = aztecWriter.encode(text, BarcodeFormat.AZTEC, 200, 200);
+                BitMatrix aztecMatrix = aztecWriter.encode(text, BarcodeFormat.AZTEC, getCodeWidth(), getCodeHeight());
                 MatrixToImageWriter.writeToPath(aztecMatrix, "jpg", Paths.get(path));
                 setGeneratedPath(Paths.get(path));
                 finalPath = path;
@@ -129,7 +133,7 @@ public class BarcodeGenerator{
                 System.out.println("The generated path is: " + getGeneratedPath());               //JOptionPane.showMessageDialog(null,"AZTEC Code Created...", "Success...",JOptionPane.WARNING_MESSAGE);
             }else if (algo.equals("QR Codes")){
                 QRCodeWriter qrWriter = new QRCodeWriter(); 
-                BitMatrix qrMatrix = qrWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
+                BitMatrix qrMatrix = qrWriter.encode(text, BarcodeFormat.QR_CODE, getCodeWidth(), getCodeHeight());
                 MatrixToImageWriter.writeToPath(qrMatrix, "jpg", Paths.get(path));
                 setGeneratedPath(Paths.get(path));
                 finalPath = path;
@@ -444,5 +448,20 @@ public class BarcodeGenerator{
         }
         
         return list;
+    }
+
+
+    public static void setCodeHeight(int height){
+        codeHeight = height;
+    }
+    public static void setCodeWidth(int width){
+        codeWidth = width;
+    }
+
+    public static int getCodeHeight(){
+        return codeHeight;
+    }
+    public static int getCodeWidth(){
+        return codeWidth;
     }
 }

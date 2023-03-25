@@ -41,6 +41,7 @@ public class ChooseDirectory {
     // Current location label.
     JLabel currLocation = new JLabel(" Current Location: " + BarcodeGenerator.getImageSavePath()); // Creates a new JLabel called currLocation and uses BarcodeGenerator.getImageSavePath() to return the current path to save the generated barcodes.
     
+    
 
     public ChooseDirectory(){ // ChooseDirectory Constructor.
 

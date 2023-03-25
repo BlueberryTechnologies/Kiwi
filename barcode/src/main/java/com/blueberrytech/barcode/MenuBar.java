@@ -43,6 +43,7 @@ public class MenuBar {
     JMenu settings = new JMenu("Settings"); // Initialize the settings portion of the menu bar.
     JMenu codeOptions = new JMenu("Code Options"); // Initialize the code options portion of the menu bar, this will be used as a nested menu bar inside of the settings bar.
     JMenuItem previewGeneratedCodeButton = new JMenuItem("Preview Generated Code"); // This is a JMenuItem for previewing generated barcodes.
+    JMenuItem selectCodeSize = new JMenuItem("Change Code Size"); // This is a JMenuItem for previewing generated barcodes.
     JMenuItem changeDirectory = new JMenuItem("Change Code Directory"); // This is a JMenuItem for changing the current directory to save the images of the generated barcodes.
     JMenuItem selectPrinter = new JMenuItem("Select Printer"); // This is a JMenuItem for selecting a printer to print to.
 
@@ -97,10 +98,17 @@ public class MenuBar {
                 }
             }
         });
+
+        selectCodeSize.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0){
+                new CodeSizeMenu();
+            }
+        });
         
         // Adding the JMenu elements to the menu bar
         
         codeOptions.add(previewGeneratedCodeButton); // Adding a nested menu item for the code options
+        codeOptions.add(selectCodeSize);
         about.add(aboutButton); // Adds the about button to the about container.
         about.add(printerResources); // Adds the printer resources to the about container.
         settings.add(changeDirectory); // Adds the change directory button to the settings container.
