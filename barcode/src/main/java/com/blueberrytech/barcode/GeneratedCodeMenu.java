@@ -28,21 +28,26 @@ public class GeneratedCodeMenu {
     JFrame generatedCodeFrame = new JFrame();
     JPanel generatedCodePanel = new JPanel();
 
+    // Height and Width Variables for the window
+    int height = BarcodeGenerator.getCodeHeight() + 30; // + 30 Pixels for a border.
+    int width = BarcodeGenerator.getCodeWidth() + 10; // + 10 Pixels for a border.
+
     
     ImageIcon icon; // This is where the generated code image will be set to.
 
     public GeneratedCodeMenu(ImageIcon icon){ // Generated Code Constructor, takes ImageIcon as a parameter.
-        renderGeneratedCodeFrame(icon); // Render Frame method
+        System.out.println("Height: " + height + "\nWidth: " + width);
+        renderGeneratedCodeFrame(icon, height, width); // Render Frame method.
     }
 
     /*
      * This takes an ImageIcon object as a parameter, this is ensuring
      * that an image will be passed and something will generate.
      */
-    private void renderGeneratedCodeFrame(ImageIcon icon){
+    private void renderGeneratedCodeFrame(ImageIcon icon, int height, int width){
         generatedCodeLabel.setIcon(icon); // Adds the image to the label
         generatedCodeFrame.add(generatedCodePanel); // Adds the Panel to the frame.
-        generatedCodeFrame.setSize(new Dimension(210,230)); // This sets the size of the window.
+        generatedCodeFrame.setSize(new Dimension(width,height)); // This sets the size of the window based on user height and width.
         generatedCodeFrame.setLocationRelativeTo(null); // This makes the window generate in the center of the user's screen.
         generatedCodeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // When the window is closed, it doesn't terminate the whole program, it only closes the window. If you wanted it to exit the program that would be JFrame.EXIT_ON_CLOSE.
         generatedCodeFrame.setTitle("Generated Code"); // This sets the title of the window.

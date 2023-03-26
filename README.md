@@ -34,16 +34,17 @@ If you would like to submit an issue or an enhancement please do so on the issue
 #### 1.1 (Coming Soon)
 
 - Give the user the option to select which media to print onto.
-- Give the user the option to select the resolution of the generated code.
 
-#### 1.0.9 (Coming Soon)
+#### 1.0.9
 
 - ##### New Features
 
   - Add the option to select size of generated codes.
+  - Add the option to refresh the printer list.
 
 - ##### Bug Fixes
   - Can't generate a link because of invalid characters. [#19](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues/19)
+  - The generated code doesn't update correctly on the preview. [#27](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues/27)
 
 #### 1.0.8
 

@@ -43,10 +43,11 @@ public class MenuBar {
     JMenu settings = new JMenu("Settings"); // Initialize the settings portion of the menu bar.
     JMenu codeOptions = new JMenu("Code Options"); // Initialize the code options portion of the menu bar, this will be used as a nested menu bar inside of the settings bar.
     JMenuItem previewGeneratedCodeButton = new JMenuItem("Preview Generated Code"); // This is a JMenuItem for previewing generated barcodes.
+    JMenuItem selectCodeSize = new JMenuItem("Change Code Size"); // This is a JMenuItem for previewing generated barcodes.
     JMenuItem changeDirectory = new JMenuItem("Change Code Directory"); // This is a JMenuItem for changing the current directory to save the images of the generated barcodes.
     JMenuItem selectPrinter = new JMenuItem("Select Printer"); // This is a JMenuItem for selecting a printer to print to.
 
-    String latestVersion = "1.0.8.3"; // This is a string of the latest version
+    String latestVersion = "1.0.9"; // This is a string of the latest version
 
     public MenuBar(){ // Menu Bar constructor
 
@@ -95,15 +96,22 @@ public class MenuBar {
                 if(!mainGenerator.getCanceledImage()){ // If the image selection was not canceled then display the code menu using a new instance of GeneratedCodeMenu() and icon as a parameter.
                     new GeneratedCodeMenu(icon);
                 }
+                icon.getImage().flush();
+            }
+        });
+
+        selectCodeSize.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0){
+                new CodeSizeMenu();
             }
         });
         
         // Adding the JMenu elements to the menu bar
-        
+        codeOptions.add(changeDirectory); // Adds the change directory button to the code options container.
         codeOptions.add(previewGeneratedCodeButton); // Adding a nested menu item for the code options
+        codeOptions.add(selectCodeSize); // Adds selectCodeSize to the codeOptions container.
         about.add(aboutButton); // Adds the about button to the about container.
         about.add(printerResources); // Adds the printer resources to the about container.
-        settings.add(changeDirectory); // Adds the change directory button to the settings container.
         settings.add(codeOptions); // Adds the code options container to the settings container.
         settings.add(selectPrinter); // Adds the select printer button to the settings container.
         menuBar.add(about); // Adds the about container to the menu bar.
