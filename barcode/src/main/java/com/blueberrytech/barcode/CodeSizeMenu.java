@@ -32,7 +32,7 @@
      JFrame chooseCodeFrame = new JFrame(); // Creates a new JFrame for the chooseCodeFrame.
      JPanel chooseCodePanel = new JPanel(); // Creates a new JPanel for the chooseCodePanel.
      JLabel currentSize = new JLabel(""); // Sets the currentSize no an empty string because it is assigned later.
- 
+    JLabel defaultSize = new JLabel("Default Size: 200x200"); // Default Size Label
      // JComboBox variables
      String[] sizeChoices = {"100x100","200x200", "300x300","400x400","500x500","600x600","700x700","800x800","900x900","1000x1000"}; // This gets the user's printers and creates a pick box for the user to select which printer they would like to use.
      JComboBox<String> sizeComboBox = new JComboBox<String>(sizeChoices);
@@ -50,14 +50,21 @@
           */
         sizeComboBox.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
-                String currentChoice = sizeChoices[sizeComboBox.getSelectedIndex()];
-                currentChoice = currentChoice.replace("x","");
-                System.out.println("CURRENT CHOICE: " + currentChoice);
-                BarcodeGenerator.setCodeWidth(Integer.parseInt(currentChoice.substring(0, 3)));
-                BarcodeGenerator.setCodeHeight(Integer.parseInt(currentChoice.substring(3, 6)));
+                if(sizeChoices[sizeComboBox.getSelectedIndex()] != "1000x1000"){
+                    String currentChoice = sizeChoices[sizeComboBox.getSelectedIndex()];
+                    currentChoice = currentChoice.replace("x","");
+                    System.out.println("CURRENT CHOICE: " + currentChoice);
+                    BarcodeGenerator.setCodeDimensions(Integer.parseInt(currentChoice.substring(0, 3)), Integer.parseInt(currentChoice.substring(3, 6)));   
+                }else{
+                    String currentChoice = sizeChoices[sizeComboBox.getSelectedIndex()];
+                    currentChoice = currentChoice.replace("x","");
+                    System.out.println("CURRENT CHOICE: " + currentChoice);
+                    BarcodeGenerator.setCodeDimensions(Integer.parseInt(currentChoice.substring(0, 4)), Integer.parseInt(currentChoice.substring(4, 8)));   
+                }
                 chooseCodePanel.removeAll(); // Removes all objects from the panel.
                 currentSize = new JLabel("Current Size: " + BarcodeGenerator.getCodeHeight() + "x" + BarcodeGenerator.getCodeWidth()); // Sets the currentSize label to the current size from the Barcode Generator class.
                 chooseCodePanel.add(currentSize); // Adds the currentSize as a JLabel to the panel.
+                chooseCodePanel.add(defaultSize); // Adds defaultSize to panel.
                 chooseCodePanel.add(sizeComboBox); // Adds the sizeComboBox onto the panel.
                 chooseCodeFrame.revalidate(); // Re-validates the frame.
                 chooseCodeFrame.repaint(); // Re-paints the frame.
@@ -90,6 +97,8 @@
           */
          currentSize = new JLabel("Current Size: " + BarcodeGenerator.getCodeHeight() + "x" + BarcodeGenerator.getCodeWidth()); // This sets the JLabel to the current size set by the BarcodeGenerator class.
          chooseCodePanel.add(currentSize); // The currentSize JLabel is added to the panel.
+         chooseCodePanel.add(defaultSize); // Adds defaultSize to panel.
+         sizeComboBox.setSelectedItem(BarcodeGenerator.getCodeHeight() + "x" + BarcodeGenerator.getCodeWidth());
          chooseCodePanel.add(sizeComboBox); // The sizeComboBox (Size Selector) is added to the panel.
          chooseCodePanel.setLayout(new GridLayout(0,1)); // A layout is applied to the panel to have the JLabel on top of the comboBox.
          chooseCodePanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30)); // Makes a border around the panel and the elements inside.

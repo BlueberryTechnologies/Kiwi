@@ -23,7 +23,6 @@ import java.util.Scanner;
 
 import javax.print.Doc;
 
-import java.awt.Dimension;
 import java.awt.print.PrinterJob;
 import java.util.List;
 import java.util.ArrayList;
@@ -440,24 +439,67 @@ public class BarcodeGenerator{
      public static List<String> getPrinterServiceNameList() {
 
         // get list of all print services
+        
         PrintService[] services = PrinterJob.lookupPrintServices();
+
         List<String> list = new ArrayList<String>();
 
         for (int i = 0; i < services.length; i++) {
             list.add(services[i].getName());
         }
-        
+        System.out.println("THE LIST: " + list);
         return list;
     }
 
+    /*
+     * 
+     * Code Dimensions
+     * 
+     */
 
-    public static void setCodeHeight(int height){
-        codeHeight = height;
+    /*
+     * Writing code dimensions to file.
+     */
+
+    public static void writeCodeDimension(int height, int width){
+        // Finding existing directory.
+        File dimensionTxt = new File(getDefaultDirectory() + "/dimension.txt");
+
+        // If the file doesn't exist with a dimension then make one and fill it in.
+        if (!dimensionTxt.exists()){
+            setDefaultDimensions();
+        }else{
+            try {
+                FileWriter writingToDimension = new FileWriter(dimensionTxt);
+                writingToDimension.write(height + "x" + width);
+                writingToDimension.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
-    public static void setCodeWidth(int width){
+
+    public static void setDefaultDimensions(){
+        FileWriter writeCodeDimension;
+        File dimensionTxt = new File(getDefaultDirectory() + "/dimension.txt");
+        try {
+            if (!dimensionTxt.exists()){
+                writeCodeDimension = new FileWriter(dimensionTxt);
+                writeCodeDimension.write("200x200");
+                writeCodeDimension.close();
+                JOptionPane.showMessageDialog(null, "A default code dimension was not found.\nIt has been created.", "Alert...", JOptionPane.WARNING_MESSAGE);
+            }else{
+                System.out.println("The default dimension exists");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void setCodeDimensions(int height, int width){
+        writeCodeDimension(height, width);
+        codeHeight = height;
         codeWidth = width;
     }
-
     public static int getCodeHeight(){
         return codeHeight;
     }

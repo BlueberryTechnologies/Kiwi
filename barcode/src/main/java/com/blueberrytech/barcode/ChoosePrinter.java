@@ -21,6 +21,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,10 +38,11 @@ public class ChoosePrinter {
     JFrame printerListFrame = new JFrame(); // Creates a new JFrame for the printer UI.
     JPanel printerListPanel = new JPanel(); // Creates a new JPanel for the printerListFrame.
     JLabel currentPrinter = new JLabel(""); // Sets the currentPrinter no an empty string because it is assigned later.
+    JButton refreshPrinterList = new JButton("Refresh Printer List"); // Button for refreshing printer list.
 
     // JComboBox variables
     String[] printerChoices = BarcodeGenerator.getPrinterServiceNameList().toArray(new String[0]); // This gets the user's printers and creates a pick box for the user to select which printer they would like to use.
-    JComboBox<String> printerComboBox = new JComboBox<String>(printerChoices);
+    JComboBox<String> printerComboBox = new JComboBox<String>(printerChoices); // This makes a comboBox out of the printerChoices.
 
 
     public ChoosePrinter(){ // ChoosePrinter Constructor
@@ -60,6 +62,24 @@ public class ChoosePrinter {
                 currentPrinter = new JLabel("Current Printer: " + BarcodeGenerator.returnPrinterName()); // Sets the currentPrinter label to the current printer from the Barcode Generator class.
                 printerListPanel.add(currentPrinter); // Adds the current printer as a JLabel to the panel.
                 printerListPanel.add(printerComboBox); // Adds the printerComboBox onto the panel.
+                printerListPanel.add(refreshPrinterList); // Adds the printer refresh button to the panel.
+                printerListPanel.revalidate(); // Re-validates the frame.
+                printerListPanel.repaint(); // Re-paints the frame.
+            }
+        });
+
+        /*
+         * ActionListener for the printerRefresh button.
+         */
+        refreshPrinterList.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0){
+                printerChoices = BarcodeGenerator.getPrinterServiceNameList().toArray(new String[0]); // This gets the user's printers and creates a pick box for the user to select which printer they would like to use.
+                printerComboBox = new JComboBox<String>(printerChoices); // Adds the comboBox back.
+                printerListPanel.removeAll(); // Removes all objects from the panel.
+                currentPrinter = new JLabel("Current Printer: " + BarcodeGenerator.returnPrinterName()); // Sets the currentPrinter label to the current printer from the Barcode Generator class.
+                printerListPanel.add(currentPrinter); // Adds the current printer as a JLabel to the panel.
+                printerListPanel.add(printerComboBox); // Adds the printerComboBox onto the panel.
+                printerListPanel.add(refreshPrinterList); // Adds the printer refresh button to the panel.
                 printerListPanel.revalidate(); // Re-validates the frame.
                 printerListPanel.repaint(); // Re-paints the frame.
             }
@@ -83,7 +103,6 @@ public class ChoosePrinter {
                  * 
                  * We update the program's printer earlier in this class in the ActionListener.
                  */
-                BarcodeEditor.currPrinter = new JLabel("Current Printer: " + BarcodeGenerator.returnPrinterName()); // Sets the BarcodeEditor's current printer to the user selected one.
                 BarcodeEditor.updateMainFrame(); // Updates the main frame.
             }
         });
@@ -100,6 +119,7 @@ public class ChoosePrinter {
         currentPrinter = new JLabel("Current Printer: " + BarcodeGenerator.returnPrinterName()); // This sets the JLabel to the current printer set by the BarcodeGenerator class.
         printerListPanel.add(currentPrinter); // The currentPrinter JLabel is added to the panel.
         printerListPanel.add(printerComboBox); // The printerComboBox (Printer Selector) is added to the panel.
+        printerListPanel.add(refreshPrinterList); // Adds the printer refresh button to the panel.
         printerListPanel.setLayout(new GridLayout(0,1)); // A layout is applied to the panel to have the JLabel on top of the comboBox.
         printerListPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30)); // Makes a border around the panel and the elements inside.
         

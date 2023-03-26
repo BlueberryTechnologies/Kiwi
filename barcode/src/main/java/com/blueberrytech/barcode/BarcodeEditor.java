@@ -201,6 +201,7 @@ public class BarcodeEditor{ // Implements ActionListener
      */
     public static void main (String args[]){
         barcodeGenerator.setInitialPrinter(); // Sets an initial printer so the user can print to something.
+        BarcodeGenerator.setDefaultDimensions();
         if(BarcodeGenerator.getImageSavePath() == null){ // If the path is null then prints.
             System.out.println("This is null"); // lol
         }else{
@@ -215,7 +216,7 @@ public class BarcodeEditor{ // Implements ActionListener
     public static void updateMainFrame(){ // Updates the mainFrame
         mainPanel.removeAll(); // Removes everything from the frame
         printingLocation = new JLabel("Printing Location: " + BarcodeGenerator.getImageSavePath()); // Re-gets the image path.
-        
+        printerNameLabel = new JLabel("Current Printer: " + BarcodeGenerator.returnPrinterName()); // Sets the BarcodeEditor's current printer to the user selected one.
         mainPanel.add(printerNameLabel); // Adds the printerName to the mainPanel
         mainPanel.add(printingLocation); // Adds the printing location to the mainPanel
         
