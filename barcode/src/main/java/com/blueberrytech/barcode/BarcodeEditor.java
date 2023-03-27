@@ -150,11 +150,11 @@ public class BarcodeEditor{ // Implements ActionListener
                 if (isGenerated && !selectedImage){ // If a code is generated and an image is not selected
                     barcodeGenerator.PrintBarcode(barcodeGenerator.getReturnPath(), false); // A code is printed with the return path and if the contents is plain text as parameters.
                 }else if (!isGenerated && !dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE") && !selectedImage){ // If the code is not generated and the comboBox is selected on image and and image hasn't been selected.
-                    JOptionPane.showMessageDialog(null,"The Code Was Not Generated.", "Aborting...",JOptionPane.WARNING_MESSAGE); // Code was not generated JOptionPane
+                    JOptionPane.showMessageDialog(null,"The Code Was Not Generated.", "Aborting...",JOptionPane.ERROR_MESSAGE); // Code was not generated JOptionPane
                 }
                 if (dropdownChoices[comboBox.getSelectedIndex()].equals("IMAGE")) { // If comboBox is selected on image.
                     if (!BarcodeGenerator.selectedImage){ // If an image was not selected
-                        JOptionPane.showMessageDialog(null, "An Image Was Not Selected", "Aborting...",JOptionPane.WARNING_MESSAGE); // Tell the user that an image was not selected with a JOptionPane
+                        JOptionPane.showMessageDialog(null, "An Image Was Not Selected", "Aborting...",JOptionPane.ERROR_MESSAGE); // Tell the user that an image was not selected with a JOptionPane
                     }else{ // If an image was selected
                         barcodeGenerator.PrintBarcode(BarcodeGenerator.getImageFile(), false); // Print the image
                         selectedImage = false; // Reset the boolean for the next image.
