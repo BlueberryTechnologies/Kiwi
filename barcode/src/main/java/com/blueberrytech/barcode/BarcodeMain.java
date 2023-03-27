@@ -1,6 +1,9 @@
 package com.blueberrytech.barcode;
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.formdev.flatlaf.intellijthemes.FlatMonocaiIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatSpacegrayIJTheme;
 import com.formdev.flatlaf.util.SystemInfo;
 
 public class BarcodeMain {
@@ -10,11 +13,12 @@ public class BarcodeMain {
             System.setProperty( "apple.laf.useScreenMenuBar", "true" );
             System.setProperty( "apple.awt.application.name", "Blueberry Tech Barcode Editor" );
             System.setProperty( "apple.awt.application.appearance", "system" );
+            FlatMacDarkLaf.setup();
         }else if(SystemInfo.isWindows_10_orLater){
-            System.setProperty("flatlaf.menuBarEmbedded", "true");
+            System.setProperty("flatlaf.menuBarEmbedded", "false");
             System.setProperty("flatlaf.useWindowDecorations", "true");
+            FlatMonocaiIJTheme.setup();
         }
-        FlatMacDarkLaf.setup();
         
         barcodeGenerator.setInitialPrinter(); // Sets an initial printer so the user can print to something.
         BarcodeGenerator.setDefaultDimensions();

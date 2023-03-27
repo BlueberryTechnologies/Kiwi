@@ -28,8 +28,7 @@ import javax.swing.SwingUtilities;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.util.SystemInfo;
-import com.apple.eawt.*;
-import com.apple.laf.*;
+
 
 import java.net.URI;
 import java.net.URISyntaxException;
