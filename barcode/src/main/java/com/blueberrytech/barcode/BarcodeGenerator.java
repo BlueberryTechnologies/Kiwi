@@ -91,7 +91,7 @@ public class BarcodeGenerator{
         AttributeSet aset = new HashAttributeSet();
         aset.add(new PrinterName(printer, null));
         printService = PrintServiceLookup.lookupPrintServices(null, aset);
-        JOptionPane.showMessageDialog(null,"Updated printer to: " + printer, "Success...",JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null,"Updated printer to: " + printer, "Success...",JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void GenerateBarcodes(String text, String algo){
@@ -119,16 +119,15 @@ public class BarcodeGenerator{
                 BitMatrix code128Matrix = code128Writer.encode(text, BarcodeFormat.CODE_128, getCodeWidth(), getCodeHeight());
                 MatrixToImageWriter.writeToPath(code128Matrix, "jpg", Paths.get(path));
                 setGeneratedPath(Paths.get(path));
-                System.out.println("The generated path is: " + getGeneratedPath());
                 finalPath = path;
-                JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Code Created at:\n" + getGeneratedPath(), "Success...",JOptionPane.INFORMATION_MESSAGE);
             }else if (algo.equals("AZTEC")){
                 AztecWriter aztecWriter = new AztecWriter();
                 BitMatrix aztecMatrix = aztecWriter.encode(text, BarcodeFormat.AZTEC, getCodeWidth(), getCodeHeight());
                 MatrixToImageWriter.writeToPath(aztecMatrix, "jpg", Paths.get(path));
                 setGeneratedPath(Paths.get(path));
                 finalPath = path;
-                JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Code Created at:\n" + getGeneratedPath(), "Success...",JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("The generated path is: " + getGeneratedPath());               //JOptionPane.showMessageDialog(null,"AZTEC Code Created...", "Success...",JOptionPane.WARNING_MESSAGE);
             }else if (algo.equals("QR Codes")){
                 QRCodeWriter qrWriter = new QRCodeWriter(); 
@@ -136,15 +135,15 @@ public class BarcodeGenerator{
                 MatrixToImageWriter.writeToPath(qrMatrix, "jpg", Paths.get(path));
                 setGeneratedPath(Paths.get(path));
                 finalPath = path;
-                JOptionPane.showMessageDialog(null,"Code Created at " + getGeneratedPath(), "Success...",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Code Created at:\n" + getGeneratedPath(), "Success...",JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("The generated path is: " + getGeneratedPath());
             }else if (algo.equals("PLAIN TEXT")){
                 PrintBarcode(text, true);
             }else if (algo.equals("IMAGE")){
-                JOptionPane.showMessageDialog(null,"How did you get here? Interesting...", "Aborting...",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"How did you get here? Interesting...", "Aborting...",JOptionPane.ERROR_MESSAGE);
             }
             else{
-                JOptionPane.showMessageDialog(null,"Barcode Failed", "Aborting...",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Barcode Failed", "Aborting...",JOptionPane.ERROR_MESSAGE);
             }
             if(algo.equals("PLAIN TEXT") || !algo.equals("IMAGE")){
                 // This is a holder because the algo check doesnt work right.
@@ -153,7 +152,7 @@ public class BarcodeGenerator{
             }
         }catch(Exception e){
             System.out.println("An exception has been thrown:\n> " + e.getMessage());
-            JOptionPane.showMessageDialog(null,"There has been an error, please check the console.\n" + e.getMessage(), "Aborting...",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"There has been an error, please check the console.\n" + e.getMessage(), "Aborting...",JOptionPane.ERROR_MESSAGE);
         }
         
     }
@@ -169,43 +168,31 @@ public class BarcodeGenerator{
                 throw new RuntimeException("No printer services available.");
                 }
                 PrintService ps = printService[0];
-                System.out.println("ops:" + ps);
-                System.out.println("=======================\n= Printing to " + printerName + "... =\n=======================");
                 DocPrintJob job = ps.createPrintJob(); // Creates a printing job to print to
                 String text = path;    // These are for printing with text
                 byte[] bytes = text.getBytes("UTF-8");
                 Doc doc = new SimpleDoc(bytes, textFlavor, null);
                 job.print(doc, PrintRequestAttributeSet()); // Initiates the printing job with the selected parameters
                 System.out.println("Printing Finished.");
-                JOptionPane.showMessageDialog(null,
-                            "Printed Text...", "Success...",
-                            JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Text was printed to:\n" + returnPrinterName(), "Success...", JOptionPane.INFORMATION_MESSAGE);
             }else if(!plainText){
                 DocFlavor imageFlavor = DocFlavor.INPUT_STREAM.GIF; // Format for images.
                 PrintRequestAttributeSet().add(new Copies(1));
-                //PrintService[] printService = FindPrintService(PrintRequestAttributeSet());
-                String printerName = "";
                 if (printService.length == 0){ // If the print service is zero then throws exception.
                 throw new RuntimeException("No printer services available.");
                 }
                 PrintService ps = printService[0];
-                System.out.println("ops:" + ps);
-                System.out.println("=======================\n= Printing to " + printerName + "... =\n=======================");
                 DocPrintJob job = ps.createPrintJob(); // Creates a printing job to print to
                 FileInputStream fin = new FileInputStream(path);
                 Doc doc = new SimpleDoc(fin, imageFlavor, null);
                 job.print(doc, PrintRequestAttributeSet()); // Initiates the printing job with the selected parameters
                 fin.close(); // Closes the file input stream once it's done
                 System.out.println("Printing Finished.");
-                JOptionPane.showMessageDialog(null,
-                            "Printed Code...", "Success...",
-                            JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "A code was printed to:\n" + returnPrinterName(), "Success...", JOptionPane.WARNING_MESSAGE);
             }
         }catch(Exception e){
             System.out.println("An exception has been thrown:\n> " + e.getMessage());
-            JOptionPane.showMessageDialog(null,
-                            e.getMessage(), "Aborting...",
-                            JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Aborting...", JOptionPane.ERROR_MESSAGE);
         }
         
     }
@@ -284,7 +271,7 @@ public class BarcodeGenerator{
 		}else{
             selectedImage = false;
             setCanceledImage(true);
-            JOptionPane.showMessageDialog(null,"You canceled image selection.", "Notify...",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"You canceled image selection.", "Notify...",JOptionPane.CANCEL_OPTION);
         }
     }
     public void selectImage(){
@@ -299,7 +286,7 @@ public class BarcodeGenerator{
 		}else{
             selectedImage = false;
             setCanceledImage(true);
-            JOptionPane.showMessageDialog(null,"You canceled image selection.", "Notify...",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"You canceled image selection.", "Notify...",JOptionPane.CANCEL_OPTION);
         }
     }
     
@@ -324,7 +311,6 @@ public class BarcodeGenerator{
     }
     public String getCurrPrinter(){
         String printer = printService.toString();
-        System.out.println("The current printer: " + printer);
         return printer;
     }
 
@@ -340,7 +326,7 @@ public class BarcodeGenerator{
             File fileToReadFrom = new File(getDefaultDirectory() + "/customPath.txt");
             if (!fileToReadFrom.exists()){
                 setDirectory(true);
-                JOptionPane.showMessageDialog(null, "A Custom File Text has been generated and placed in: " + getDefaultDirectory(), "Warning...", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "A Custom File Text has been generated and placed in: " + getDefaultDirectory(), "Notify...", JOptionPane.INFORMATION_MESSAGE);
             }
             FileReader readingFile = new FileReader(fileToReadFrom);
             Scanner readingFileScanner = new Scanner(readingFile);
@@ -358,27 +344,26 @@ public class BarcodeGenerator{
     }
     private static void setDefaultDirectory(){
         File defaultDirectory = new File("");
-        System.out.println(user_home);
         if (OS.contains("windows") || OS.contains("win")){
             defaultDirectory = new File(user_home + "\\Documents", "BBTBE");
             if(!defaultDirectory.exists()){
-                JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.INFORMATION_MESSAGE);
                 defaultDirectory.mkdirs();
             }
         }else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")){ // Checks if the operating system is a Linux Variant.
             defaultDirectory = new File(user_home, "BBTBE");
             if(!defaultDirectory.exists()){
-                JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.INFORMATION_MESSAGE);
                 defaultDirectory.mkdirs();
             }
         }else if (OS.contains("mac")){ // Checks if the operating system is MacOS
             defaultDirectory = new File(user_home, "BBTBE");
             if(!defaultDirectory.exists()){
-                JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.INFORMATION_MESSAGE);
                 defaultDirectory.mkdirs();
             }
         }else {
-            JOptionPane.showMessageDialog(null,"Operating System Not Found", "Aborting...",JOptionPane.WARNING_MESSAGE); 
+            JOptionPane.showMessageDialog(null,"Operating System Not Found.\nThe program will exit now, sorry for the inconvenience.", "Aborting...",JOptionPane.WARNING_MESSAGE); 
         }
         defaultDirectoryToWrite = defaultDirectory;
     }
@@ -396,7 +381,7 @@ public class BarcodeGenerator{
                         writingFile.close();
                         return selectedFile;
                     }catch(IOException e){
-                        JOptionPane.showMessageDialog(null,"There was an error setting the custom directory.\nPlease check the console.", "Aborting...",JOptionPane.WARNING_MESSAGE); 
+                        JOptionPane.showMessageDialog(null,"There was an error setting the custom directory.\nPlease check the console.", "Aborting...",JOptionPane.ERROR_MESSAGE); 
                         System.out.println("There was an error setting the custom directory.\n> " + e.getMessage());
                     }
                 }
@@ -408,7 +393,7 @@ public class BarcodeGenerator{
                     writingFile.close();
                     return getDefaultDirectory();
                 }catch(IOException e){
-                    JOptionPane.showMessageDialog(null,"There was an error setting the default directory.\nPlease check the console.", "Aborting...",JOptionPane.WARNING_MESSAGE); 
+                    JOptionPane.showMessageDialog(null,"There was an error setting the default directory.\nPlease check the console.", "Aborting...",JOptionPane.ERROR_MESSAGE); 
                     System.out.println("There was an error setting the default directory.\n> " + e.getMessage());
                 }
             }
@@ -433,7 +418,6 @@ public class BarcodeGenerator{
                 service = services[index];
             }
         }
-        System.out.println("Found print service: " + service);
         return service;
      }
      public static List<String> getPrinterServiceNameList() {
@@ -447,7 +431,6 @@ public class BarcodeGenerator{
         for (int i = 0; i < services.length; i++) {
             list.add(services[i].getName());
         }
-        System.out.println("THE LIST: " + list);
         return list;
     }
 
@@ -487,7 +470,7 @@ public class BarcodeGenerator{
                 writeCodeDimension = new FileWriter(dimensionTxt);
                 writeCodeDimension.write("200x200");
                 writeCodeDimension.close();
-                JOptionPane.showMessageDialog(null, "A default code dimension was not found.\nIt has been created.", "Alert...", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "A default code dimension was not found.\nIt has been created.", "Alert...", JOptionPane.INFORMATION_MESSAGE);
             }else{
                 System.out.println("The default dimension exists");
             }
