@@ -23,6 +23,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.formdev.flatlaf.util.SystemInfo;
+import com.apple.eawt.*;
+import com.apple.laf.*;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -199,15 +207,6 @@ public class BarcodeEditor{ // Implements ActionListener
     /*
      * METHODS
      */
-    public static void main (String args[]){
-        barcodeGenerator.setInitialPrinter(); // Sets an initial printer so the user can print to something.
-        BarcodeGenerator.setDefaultDimensions();
-        if(BarcodeGenerator.getImageSavePath() == null){ // If the path is null then prints.
-            System.out.println("This is null"); // lol
-        }else{
-            new BarcodeEditor(); // If the path is not null then the program runs.
-        }
-    }
 
     public static JFrame getMainFrame(){ // Returns the mainFrame
         return mainFrame; // Return
