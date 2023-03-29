@@ -24,6 +24,10 @@
 
 ## Documentation
 
+### Prerequisites
+For the Windows and Linux versions you will need a Java JRE which is typically packaged within a Java JDK.
+You can follow the steps on the Wiki [here](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki/Installation#jre) to install if you don't already have one.
+
 To view the documentation for this program, please head to our website linked below.
 [Blueberry Technologies Barcode Editor Documentation](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki)
 
