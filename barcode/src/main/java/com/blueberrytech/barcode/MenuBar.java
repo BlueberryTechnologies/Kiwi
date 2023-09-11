@@ -42,7 +42,8 @@ public class MenuBar {
      */
     JMenu settings = new JMenu("Settings"); // Initialize the settings portion of the menu bar.
     JMenu codeOptions = new JMenu("Code Options"); // Initialize the code options portion of the menu bar, this will be used as a nested menu bar inside of the settings bar.
-    JMenuItem previewGeneratedCodeButton = new JMenuItem("Preview Generated Code"); // This is a JMenuItem for previewing generated barcodes.
+    JMenuItem previewCurrentCode = new JMenuItem("Preview Current Code");
+    JMenuItem previewPreviouslyGeneratedCodeButton = new JMenuItem("Preview Previously Generated Codes"); // This is a JMenuItem for previewing generated barcodes.
     JMenuItem selectCodeSize = new JMenuItem("Change Code Size"); // This is a JMenuItem for previewing generated barcodes.
     JMenuItem changeDirectory = new JMenuItem("Change Code Directory"); // This is a JMenuItem for changing the current directory to save the images of the generated barcodes.
     JMenuItem selectPrinter = new JMenuItem("Select Printer"); // This is a JMenuItem for selecting a printer to print to.
@@ -89,14 +90,27 @@ public class MenuBar {
         
         
         // This is an action listener for the preview generated code button in the settings container on the menu bar.
-        previewGeneratedCodeButton.addActionListener(new ActionListener(){
+        previewPreviouslyGeneratedCodeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 mainGenerator.selectCodeImage(); // Prompts the user with a file explorer having them pick an image (code) they would like displayed. This defaults to the current directory set in the BarcodeGenerator class.
                 ImageIcon icon = new ImageIcon(BarcodeGenerator.getImageFile()); // Makes a new ImageIcon and sets it to the image that was selected by the user.
                 if(!mainGenerator.getCanceledImage()){ // If the image selection was not canceled then display the code menu using a new instance of GeneratedCodeMenu() and icon as a parameter.
-                    new GeneratedCodeMenu(icon);
+                    new CurrentGeneratedCodeMenu(icon);
                 }
                 icon.getImage().flush();
+            }
+        });
+
+        previewCurrentCode.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+                // When the user types into the box to generate a code,
+                // this will give a real time look onto what the code will look like.
+
+                // This can be achieved by generating a new code and storing it as a temp
+                // value each time the user types a new char into the box.
+
+                // The new code will then be shown onto a box and refreshed and deleted
+                // everytime there is a new char.
             }
         });
 
@@ -108,7 +122,8 @@ public class MenuBar {
         
         // Adding the JMenu elements to the menu bar
         codeOptions.add(changeDirectory); // Adds the change directory button to the code options container.
-        codeOptions.add(previewGeneratedCodeButton); // Adding a nested menu item for the code options
+        codeOptions.add(previewCurrentCode);
+        codeOptions.add(previewPreviouslyGeneratedCodeButton); // Adding a nested menu item for the code options
         codeOptions.add(selectCodeSize); // Adds selectCodeSize to the codeOptions container.
         about.add(aboutButton); // Adds the about button to the about container.
         about.add(printerResources); // Adds the printer resources to the about container.

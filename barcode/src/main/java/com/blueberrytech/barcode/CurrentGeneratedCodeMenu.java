@@ -21,7 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GeneratedCodeMenu {
+public class CurrentGeneratedCodeMenu {
 
     // Java Swing Variables
     JLabel generatedCodeLabel = new JLabel();
@@ -35,7 +35,7 @@ public class GeneratedCodeMenu {
     
     ImageIcon icon; // This is where the generated code image will be set to.
 
-    public GeneratedCodeMenu(ImageIcon icon){ // Generated Code Constructor, takes ImageIcon as a parameter.
+    public CurrentGeneratedCodeMenu(ImageIcon icon){ // Generated Code Constructor, takes ImageIcon as a parameter.
         System.out.println("Height: " + height + "\nWidth: " + width);
         renderGeneratedCodeFrame(icon, height, width); // Render Frame method.
     }
