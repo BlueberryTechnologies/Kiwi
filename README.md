@@ -20,24 +20,27 @@
 - Custom path storage
 - Code Previews
 
+## Installation
+
+This program supports Windows, Mac, and Linux Operating Systems. If you would like us to support another operating system please submit an issue [here](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues) with the enhancement tag letting us know.
+
+You can install the program by following the steps outlined in the [documentation](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki).
+
+The only prerequisite is having a Java JRE which is typically packaged inside of a Java JDK. You can also follow the steps [here](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki/Installation#jre) to install Java on Windows and [here](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki/Installation#linux) on Linux.
+
+The only platform that doesn't require Java is Mac because it is packaged inside of the .PKG file.
+
 ---
-
-## Documentation
-
-### Prerequisites
-For the Windows and Linux versions you will need a Java JRE which is typically packaged within a Java JDK.
-You can follow the steps on the Wiki [here](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki/Installation#jre) to install if you don't already have one.
-
-To view the documentation for this program, please head to our website linked below.
-[Blueberry Technologies Barcode Editor Documentation](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki)
-
-If you would like to submit an issue or an enhancement please do so on the issues page of this repo [here](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues).
 
 ## Changelog
 
 #### 1.1 (Coming Soon)
 
-- Give the user the option to select which media to print onto.
+- Major UI changes.
+  - Dark Mode / Light Mode
+- Selectable printing sizes
+- Confirm Box for printing
+- Print previously generated barcode.
 
 #### 1.0.9
 
@@ -45,6 +48,7 @@ If you would like to submit an issue or an enhancement please do so on the issue
 
   - Add the option to select size of generated codes.
   - Add the option to refresh the printer list.
+  - Start of UI changes.
 
 - ##### Bug Fixes
   - Can't generate a link because of invalid characters. [#19](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues/19)

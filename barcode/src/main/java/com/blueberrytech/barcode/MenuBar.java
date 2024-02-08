@@ -10,12 +10,19 @@
  * Last User Modified: gh/rileyrichard
  * License: GPL-3.0
  */
+
 package com.blueberrytech.barcode;
 
 // Java Imports
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -47,7 +54,21 @@ public class MenuBar {
     JMenuItem changeDirectory = new JMenuItem("Change Code Directory"); // This is a JMenuItem for changing the current directory to save the images of the generated barcodes.
     JMenuItem selectPrinter = new JMenuItem("Select Printer"); // This is a JMenuItem for selecting a printer to print to.
 
-    String latestVersion = "1.0.9"; // This is a string of the latest version
+    // Generated Code History
+    JMenuItem generatedCodeHistory = new JMenuItem("Generated Code History");
+
+    String latestVersion = "1.0.0"; // This is a string of the latest version.
+    /*   After 1.0.9 the version scheme has changed. We are using semantic versioning now.
+    *         1.0.000
+    *    Major.Minor.Patch
+    * 
+    *  The Major is for major changes in the program. (New features, UI changes, etc).
+    *  Minor is for tiny additions. (This can include minor features, bug fixes, etc).
+    *  Patch is for important bug fixes / features that were supposed to be added but were forgotten.
+    *
+    *  We are also renaming the previous versions to Beta Builds. They will be b1.0.0 - b1.0.9.
+    *  03/29/2023
+    */
 
     public MenuBar(){ // Menu Bar constructor
 
@@ -114,8 +135,69 @@ public class MenuBar {
         about.add(printerResources); // Adds the printer resources to the about container.
         settings.add(codeOptions); // Adds the code options container to the settings container.
         settings.add(selectPrinter); // Adds the select printer button to the settings container.
+        settings.add(generatedCodeHistory); // Adds the generated code history section to the menu bar.
         menuBar.add(about); // Adds the about container to the menu bar.
         menuBar.add(settings); // Adds the settings container to the menu bar.
+    }
+
+    /*
+     * Previous Generated Code List as Menu Bar items.
+     */
+
+    private void updatePreviousGeneratedCode(){
+
+    }
+
+    public static void initializeDefaultGeneratedCodeHistory(){
+        FileWriter writeCodeHistory;
+        File historyTxt = new File(BarcodeGenerator.getDefaultDirectory() + "/history.txt");
+        try {
+            if (!historyTxt.exists()){
+                writeCodeHistory = new FileWriter(historyTxt);
+                writeCodeHistory.close();
+            }else{
+                System.out.println("The default history file exists");
+            }
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeGeneratedCodeHistory(String pathOfCode){
+        FileWriter writeCodeHistory;
+        File historyTxt = new File(BarcodeGenerator.getDefaultDirectory() + "/history.txt");
+        
+        try{
+            if(historyTxt.exists()){
+                writeCodeHistory = new FileWriter(historyTxt);
+                writeCodeHistory.append(pathOfCode);
+                writeToMenuBar();
+            }else{
+                System.out.println("The history path was attempted to be created and it hasn't.");
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void writeToMenuBar(){ // Writes the generated code history to the menu bar from a file.
+        File historyTxt = new File(BarcodeGenerator.getDefaultDirectory() + "/history.txt"); // Takes the file.
+        BufferedReader readingHistoryFile; // Makes a reader.
+        try{
+            readingHistoryFile = new BufferedReader (new FileReader(historyTxt)); // Sets the reader.
+            String[] menuBarItems = new String[(int) historyTxt.length() /* Casting int to long */]; // Making a fixed array to the length of the txt file.
+            for (int i = 0; i < historyTxt.length(); i++){ // Loops through the text file.
+                try{
+                    menuBarItems[i] = readingHistoryFile.readLine(); // Every line (every code) is set to a place in the array.
+                    //JMenuItem i = new JMenuItem("d");
+                }
+                catch(IOException e){
+                    e.printStackTrace(); // Prints errors.
+                }
+            }
+        }catch(IOException e){
+            e.printStackTrace(); // Prints errors.
+        }
     }
 
     public JMenuBar getMenuBar(){ // This is a method to return the menu bar object.

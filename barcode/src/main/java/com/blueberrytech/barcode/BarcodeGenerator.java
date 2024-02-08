@@ -9,6 +9,8 @@
  * Last Date Modified: 03/24/2023
  * Last User Modified: gh/rileyrichard
  * License: GPL-3.0
+ * no comment
+ * bmmm bm bm bm bmbmbm bmm
  */
 package com.blueberrytech.barcode;
 import java.io.File;
@@ -158,42 +160,49 @@ public class BarcodeGenerator{
     }
 
     public void PrintBarcode(String path, boolean plainText){
-        System.out.println(printService);
-        try{
-            if(plainText){
-                DocFlavor textFlavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-                PrintRequestAttributeSet().add(new Copies(1));
-                String printerName = "";
-                if (printService.length == 0){ // If the print service is zero then throws exception.
-                throw new RuntimeException("No printer services available.");
+        
+        int printingConfirmed = JOptionPane.showConfirmDialog(null, "Are you sure you would like to print " + returnCodeName(path) + " on " + returnPrinterName() + "?","ALERT!",JOptionPane.OK_CANCEL_OPTION); // Ask the user to confirm that they're printing.
+        if (printingConfirmed == JOptionPane.YES_OPTION){ // If they select yes.
+            try{
+                if(plainText){
+                    DocFlavor textFlavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+                    PrintRequestAttributeSet().add(new Copies(1));
+                    String printerName = "";
+                    if (printService.length == 0){ // If the print service is zero then throws exception.
+                    throw new RuntimeException("No printer services available.");
+                    }
+                    PrintService ps = printService[0];
+                    DocPrintJob job = ps.createPrintJob(); // Creates a printing job to print to
+                    String text = path;    // These are for printing with text
+                    byte[] bytes = text.getBytes("UTF-8");
+                    Doc doc = new SimpleDoc(bytes, textFlavor, null);
+                    job.print(doc, PrintRequestAttributeSet()); // Initiates the printing job with the selected parameters
+                    System.out.println("Printing Finished.");
+                    JOptionPane.showMessageDialog(null, "Text was printed to " + returnPrinterName(), "Success...", JOptionPane.INFORMATION_MESSAGE);
+                }else if(!plainText){
+                    DocFlavor imageFlavor = DocFlavor.INPUT_STREAM.GIF; // Format for images.
+                    PrintRequestAttributeSet().add(new Copies(1));
+                    if (printService.length == 0){ // If the print service is zero then throws exception.
+                    throw new RuntimeException("No printer services available.");
+                    }
+                    PrintService ps = printService[0];
+                    DocPrintJob job = ps.createPrintJob(); // Creates a printing job to print to
+                    FileInputStream fin = new FileInputStream(path);
+                    Doc doc = new SimpleDoc(fin, imageFlavor, null);
+                    job.print(doc, PrintRequestAttributeSet()); // Initiates the printing job with the selected parameters
+                    fin.close(); // Closes the file input stream once it's done
+                    System.out.println("Printing Finished.");
+                    JOptionPane.showMessageDialog(null, "A code was printed to " + returnPrinterName(), "Success...", JOptionPane.WARNING_MESSAGE);
                 }
-                PrintService ps = printService[0];
-                DocPrintJob job = ps.createPrintJob(); // Creates a printing job to print to
-                String text = path;    // These are for printing with text
-                byte[] bytes = text.getBytes("UTF-8");
-                Doc doc = new SimpleDoc(bytes, textFlavor, null);
-                job.print(doc, PrintRequestAttributeSet()); // Initiates the printing job with the selected parameters
-                System.out.println("Printing Finished.");
-                JOptionPane.showMessageDialog(null, "Text was printed to:\n" + returnPrinterName(), "Success...", JOptionPane.INFORMATION_MESSAGE);
-            }else if(!plainText){
-                DocFlavor imageFlavor = DocFlavor.INPUT_STREAM.GIF; // Format for images.
-                PrintRequestAttributeSet().add(new Copies(1));
-                if (printService.length == 0){ // If the print service is zero then throws exception.
-                throw new RuntimeException("No printer services available.");
-                }
-                PrintService ps = printService[0];
-                DocPrintJob job = ps.createPrintJob(); // Creates a printing job to print to
-                FileInputStream fin = new FileInputStream(path);
-                Doc doc = new SimpleDoc(fin, imageFlavor, null);
-                job.print(doc, PrintRequestAttributeSet()); // Initiates the printing job with the selected parameters
-                fin.close(); // Closes the file input stream once it's done
-                System.out.println("Printing Finished.");
-                JOptionPane.showMessageDialog(null, "A code was printed to:\n" + returnPrinterName(), "Success...", JOptionPane.WARNING_MESSAGE);
+            }catch(Exception e){
+                System.out.println("An exception has been thrown:\n> " + e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aborting...", JOptionPane.ERROR_MESSAGE);
             }
-        }catch(Exception e){
-            System.out.println("An exception has been thrown:\n> " + e.getMessage());
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Aborting...", JOptionPane.ERROR_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "The operation was cancelled.", "Cancelled.", JOptionPane.INFORMATION_MESSAGE);
         }
+        
+        
         
     }
 
@@ -209,6 +218,13 @@ public class BarcodeGenerator{
     public static Path getGeneratedPath(){
         System.out.println("Path:" + generatedPath);
         return generatedPath;
+    }
+
+    public String returnCodeName(String codePath){
+        if (codePath.contains(getImageSavePath())){
+            codePath = codePath.replace(getImageSavePath() + "/barcode_images/ ", "");
+        }
+        return codePath;
     }
 
     public boolean checkIfTextValid(String text){

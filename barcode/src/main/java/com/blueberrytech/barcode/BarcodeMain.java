@@ -21,7 +21,8 @@ public class BarcodeMain {
         }
         
         barcodeGenerator.setInitialPrinter(); // Sets an initial printer so the user can print to something.
-        BarcodeGenerator.setDefaultDimensions();
+        BarcodeGenerator.setDefaultDimensions(); // Sets the default dimension file.
+        MenuBar.initializeDefaultGeneratedCodeHistory(); // Initializes the code history for the menu bar.
         if(BarcodeGenerator.getImageSavePath() == null){ // If the path is null then prints.
             System.out.println("This is null"); // lol
         }else{
