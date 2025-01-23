@@ -25,7 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import com.formdev.flatlaf.FlatLightLaf;
 
 
 import java.net.URI;
