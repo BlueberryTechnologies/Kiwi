@@ -1,11 +1,8 @@
 package com.blueberrytech.barcode;
 
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.intellijthemes.FlatMonocaiIJTheme;
-import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
-import com.formdev.flatlaf.intellijthemes.FlatSpacegrayIJTheme;
 import com.formdev.flatlaf.util.SystemInfo;
-
+recognizing
 public class BarcodeMain {
     static BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
     public static void main(String[] args) {

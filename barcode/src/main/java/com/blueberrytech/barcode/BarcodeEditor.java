@@ -26,8 +26,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.formdev.flatlaf.util.SystemInfo;
 
 
 import java.net.URI;
