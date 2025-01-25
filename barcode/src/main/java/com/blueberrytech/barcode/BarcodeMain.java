@@ -1,21 +1,24 @@
 package com.blueberrytech.barcode;
 
+
 import com.formdev.flatlaf.util.SystemInfo;
-import com.blueberrytech.barcode.generator.BarcodeGenerator;
-import com.blueberrytech.barcode.editor.BarcodeEditor;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+
 public class BarcodeMain {
     static BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
     public static void main(String[] args) {
+
         if( SystemInfo.isMacOS ) {
             System.setProperty( "apple.laf.useScreenMenuBar", "true" );
             System.setProperty( "apple.awt.application.name", "Blueberry Tech Barcode Editor" );
             System.setProperty( "apple.awt.application.appearance", "system" );
-            //FlatMonocaiIJTheme.setup();
+            FlatMacDarkLaf.setup();
         }else if(SystemInfo.isWindows_10_orLater){
             System.setProperty("flatlaf.menuBarEmbedded", "false");
             System.setProperty("flatlaf.useWindowDecorations", "true");
-            //FlatMonocaiIJTheme.setup();
+            
         }
+
         
         barcodeGenerator.setInitialPrinter(); // Sets an initial printer so the user can print to something.
         BarcodeGenerator.setDefaultDimensions();
