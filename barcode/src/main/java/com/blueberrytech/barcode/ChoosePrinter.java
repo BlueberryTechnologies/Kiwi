@@ -1,5 +1,5 @@
 /*
- * Blueberry Technologies Barcode Editor
+ * Kiwi Barcode Editor
  * Choose Printer Class
  * 
  * This class is used for the UI of selecting a printer then setting

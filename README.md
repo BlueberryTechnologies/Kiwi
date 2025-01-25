@@ -1,4 +1,4 @@
-# Blueberry Tech Barcode Editor
+# Kiwi
 
 ![License](https://img.shields.io/github/license/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
 ![Version](https://img.shields.io/github/v/release/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
@@ -29,15 +29,18 @@ For the Windows and Linux versions you will need a Java JRE which is typically p
 You can follow the steps on the Wiki [here](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki/Installation#jre) to install if you don't already have one.
 
 To view the documentation for this program, please head to our website linked below.
-[Blueberry Technologies Barcode Editor Documentation](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki)
+[Kiwi Documentation](https://github.com/BlueberryTechnologies/Kiwi/wiki)
 
 If you would like to submit an issue or an enhancement please do so on the issues page of this repo [here](https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/issues).
 
 ## Changelog
 
-#### 1.1 (Coming Soon)
+#### 1.1
 
-- Give the user the option to select which media to print onto.
+- Updated various libraries
+- Changed name for better consistency
+- Removed unused imports/cleaned up
+- Changed default path from ```/BBTBE``` to ```/Kiwi```
 
 #### 1.0.9
 

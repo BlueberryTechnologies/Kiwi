@@ -1,5 +1,5 @@
 /*
- * Blueberry Technologies Barcode Editor
+ * Kiwi Barcode Editor
  * Code Size Menu Class
  * 
  * This class is for specifying the size of the generated code.

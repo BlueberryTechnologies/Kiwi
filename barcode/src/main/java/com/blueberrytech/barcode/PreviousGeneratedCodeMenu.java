@@ -1,5 +1,5 @@
 /*
- * Blueberry Technologies Barcode Editor
+ * Kiwi Barcode Editor
  * Generated Code Menu Class
  * 
  * This class is used for displaying a previously generated code before printing.

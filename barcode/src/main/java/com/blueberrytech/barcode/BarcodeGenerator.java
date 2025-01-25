@@ -1,12 +1,12 @@
 /*
  * NOT FULLY COMMENTED YET!
- * Blueberry Technologies Barcode Editor
+ * Kiwi Barcode Editor
  * Barcode Generator Class
  * 
  * This class is the main generator for printing and generating codes.
  * 
  * 
- * Last Date Modified: 03/24/2023
+ * Last Date Modified: 01/25/2025
  * Last User Modified: gh/rileyrichard
  * License: GPL-3.0
  */
@@ -57,26 +57,15 @@ public class BarcodeGenerator{
     
 
 
-    String printerName = "";
-    String printerIP = "";
-    String userChoice = "";
-    String userChoiceCode = "";
-    String comboSelected = "";
+
     String finalPath = "";
-    String textToWrite;
     static String targetFile;
     static String customLocation;
-    String photoLocation;
-    boolean isGenerated = false;
     static boolean selectedImage = false;
-    ImageIcon image;
-    File file;
     private static String OS = System.getProperty("os.name").toLowerCase();
     private static final File user_home = new File(System.getProperty("user.home"));
-    File customFileLocation;
     static File defaultDirectoryToWrite = new File("");
     static PrintService[] printService;
-    PrintService currPrinter;
     private static Path generatedPath;
     private static boolean isCanceled;
 
@@ -251,7 +240,7 @@ public class BarcodeGenerator{
         }
         if (link.contains("-")){
             link = link.replace("-", "");
-        }
+        } // What the fuck is this shit, idk if I should fix it
         return link;
     }
     public void selectCodeImage(){
@@ -345,19 +334,19 @@ public class BarcodeGenerator{
     private static void setDefaultDirectory(){
         File defaultDirectory = new File("");
         if (OS.contains("windows") || OS.contains("win")){
-            defaultDirectory = new File(user_home + "\\Documents", "BBTBE");
+            defaultDirectory = new File(user_home + "\\Documents", "Kiwi");
             if(!defaultDirectory.exists()){
                 JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.INFORMATION_MESSAGE);
                 defaultDirectory.mkdirs();
             }
         }else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")){ // Checks if the operating system is a Linux Variant.
-            defaultDirectory = new File(user_home, "BBTBE");
+            defaultDirectory = new File(user_home, "Kiwi");
             if(!defaultDirectory.exists()){
                 JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.INFORMATION_MESSAGE);
                 defaultDirectory.mkdirs();
             }
         }else if (OS.contains("mac")){ // Checks if the operating system is MacOS
-            defaultDirectory = new File(user_home, "BBTBE");
+            defaultDirectory = new File(user_home, "Kiwi");
             if(!defaultDirectory.exists()){
                 JOptionPane.showMessageDialog(null, "The default directory doesn't exist.\nIt has been created.", "Warning", JOptionPane.INFORMATION_MESSAGE);
                 defaultDirectory.mkdirs();

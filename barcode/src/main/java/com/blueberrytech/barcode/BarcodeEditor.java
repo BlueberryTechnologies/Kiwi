@@ -1,5 +1,5 @@
 /*
- * Blueberry Technologies Barcode Editor
+ * Kiwi Barcode Editor
  * Barcode Editor Class
  * 
  * This class generates the main UI for the program.
@@ -193,7 +193,7 @@ public class BarcodeEditor{ // Implements ActionListener
         
         
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Set the default behavior for closing a window to disposing not exiting.
-        mainFrame.setTitle("Blueberry Technologies Barcode Editor"); // Set the default title for the mainFrame
+        mainFrame.setTitle("Kiwi Barcode Editor"); // Set the default title for the mainFrame
         mainFrame.pack(); // Pack everything close together in the frame.
         mainFrame.setVisible(true); // Set the frame to visible so the user can see.
     } // End of constructor.

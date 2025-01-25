@@ -1,12 +1,12 @@
 /*
- * Blueberry Technologies Barcode Editor
+ * Kiwi Barcode Editor
  * Menu Bar Class
  * 
  * This class is for the menu bar shown above the main frame.
  * This houses all of the Settings and the About section.
  * 
  * 
- * Last Date Modified: 03/20/2023
+ * Last Date Modified: 01/25/2025
  * Last User Modified: gh/rileyrichard
  * License: GPL-3.0
  */
@@ -48,22 +48,22 @@ public class MenuBar {
     JMenuItem changeDirectory = new JMenuItem("Change Code Directory"); // This is a JMenuItem for changing the current directory to save the images of the generated barcodes.
     JMenuItem selectPrinter = new JMenuItem("Select Printer"); // This is a JMenuItem for selecting a printer to print to.
 
-    String latestVersion = "1.0.9"; // This is a string of the latest version
+    String latestVersion = "1.1"; // This is a string of the latest version
 
     public MenuBar(){ // Menu Bar constructor
 
-        // This is an action listener for the about button inside of the about container on the menu bar.
+        // This is an action listener for the about button inside the about container on the menu bar.
         aboutButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 // This creates a JOptionPane giving about information of the program.
-                JOptionPane.showMessageDialog(null, "Blueberry Technologies Barcode Editor.\nVersion " + latestVersion + "\n© Blueberry Technologies, 2022-2023", "About...", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Kiwi Barcode Editor.\nVersion " + latestVersion + "\n© Blueberry Technologies, 2022-2025", "About...", JOptionPane.WARNING_MESSAGE);
             }
         });
 
         // This is an action listener for the printer resources button inside of the about container on the menu bar.
         printerResources.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
-                String websiteString = "https://github.com/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/wiki"; // This sets a string to where the user is going to be taken for printer resources.
+                String websiteString = "https://github.com/BlueberryTechnologies/Kiwi/wiki"; // This sets a string to where the user is going to be taken for printer resources.
                 URI website; // This makes a new URI called website.
                 try { // This is a try/catch for opening a webpage.
                     website = new URI(websiteString); // Sets website to websiteString but then makes it into a URI.

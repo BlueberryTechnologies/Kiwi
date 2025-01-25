@@ -1,5 +1,5 @@
 /*
- * Blueberry Technologies Barcode Editor
+ * Kiwi Barcode Editor
  * Choose Directory Class
  * 
  * This class is for the user to select a new directory for the barcodes to be generated.
