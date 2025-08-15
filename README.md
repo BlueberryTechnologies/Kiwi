@@ -5,6 +5,8 @@
 ![Downloads](https://img.shields.io/github/downloads/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor/total)
 ![Commits](https://img.shields.io/github/commit-activity/m/BlueberryTechnologies/Blueberry-Tech-Barcode-Editor)
 
+## This is not being actively developed anymore, please refer to our other projects [here](https://blueberry.dev) in the meantime! You can still download and use this project.
+
 ## Support
 
 [![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dblueberrytechnologies%26type%3Dpatrons&style=flat)](https://patreon.com/blueberrytechnologies)
